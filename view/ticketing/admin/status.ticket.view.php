@@ -19,8 +19,9 @@
                         <div class="row">
                             <input type="hidden" name="_method" value="PATCH">
                             <input type="hidden" name="id" value="<?=$_GET['ticketing']?>">
+                            <input type="hidden" name="ticketId" value="<?=$ticket['ticketId']?>">
 
-                            <div class="col-lg-8">
+                            <div class="col-lg-4">
                                 <label for="classification">Classification</label>
                                 <select name="classification" id="classification" class="form-control form-sm mt-1 mb-1">
                                     <option value="<?= $ticket['classification']?>"><?= $ticket['classification']?></option>
@@ -32,6 +33,13 @@
                                     <?php endif;?>
                                 </select>
 
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="email">User's Email</label>
+                                <select name="email" id="email" class="form-control form-sm mt-1 mb-1">
+                                    <option value="<?= $ticket['email']?>"><?= $ticket['email']?></option>
+                                </select>
                             </div>
 
                             <div class="col-lg-4">
@@ -68,13 +76,11 @@
                                 <label for="status">Assign To</label>
                                 <select name="ticket_assigned_to" id="ticket_assigned_to" class="form-control form-sm mt-1 mb-1">
                                     <option value="<?= $ticket['ticket_assigned_to']?>"><?= $ticket['ticket_assigned_to']?></option>
-                                    <option value="ML. Marong">ML. Marong</option>
-                                    <option value="F. Susso">F. Susso</option>
-                                    <option value="P. Hassan">P. Hassan</option>
-                                    <option value="B. Jobe">B. Jobe</option>
-                                    <option value="ML. Barrow">ML. Barrow</option>
-                                    <option value="S. Ceesay">S. Ceesay</option>
-
+                                    <option value="modoulamin.marong@apswallet.gm">ML. Marong</option>
+                                    <option value="it@apsinternational.com">F. Susso</option>
+                                    <option value="psylva@apsgambia.gm">P. Hassan</option>
+                                    <option value="biran@apsinternational.com">B. Jobe</option>
+                                    <option value="mlbarrow@gpay.gm">ML. Barrow</option>
                                 </select>
 
                             </div>

@@ -22,7 +22,7 @@ class Database {
 
     public function query($query, $params = [])
     {
-        $this->statement = $this->connection->prepare($query);
+        $this->statement = $this->connection->prepare($query);  // pre state...
         $this->statement->execute($params);
 
         return $this;

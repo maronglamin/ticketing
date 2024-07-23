@@ -74,14 +74,14 @@
                                       </tbody>
                                     </table>
                                     <p class="" style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;" align="left">
-                                      <h1>Ticket Received - Thank You!</h1>
-                                      We have received your request and it has been logged into our system. The team is currently reviewing the details and will be in touch with you shortly.
+                                      Thanks for contacting us recently about your TICKET with the Ticket_id in the subject.
                                     </p>
 
                                     <p class="" style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;" align="left">
-                                    <p>We appreciate your patience and will do our best to address your request as soon as possible. If you have any further questions or concerns, please don't hesitate to reach out to us.</p>
+                                    <p>Our records show that your issue has been resolved, so we will close this ticket in <strong>THREE (3) workings days</strong></p>
+                                    <p>However, if you still need our help, just hit 'reply' to let us know and one of the team member be in touch shortly.</p>
                                       <p>Best regards,<br>
-                                      APS Wallet IT TEAM</p>                                    
+                                      <strong>APSW IT TEAM</strong></p>                                    
                                     </p>
                                     <table class="s-4 w-full" role="presentation" border="0" cellpadding="0" cellspacing="0" style="width: 100%;" width="100%">
                                       <tbody>
@@ -96,7 +96,7 @@
                                       <tbody>
                                         <tr>
                                           <td style="line-height: 24px; font-size: 16px; border-radius: 6px; font-weight: 700 !important; margin: 0;" align="center" bgcolor="#0d6efd">
-                                            <a href="http://localhost/bianalysts/ticketing" style="color: #ffffff; font-size: 16px; font-family: Helvetica, Arial, sans-serif; text-decoration: none; border-radius: 6px; line-height: 20px; display: block; font-weight: 700 !important; white-space: nowrap; background-color: #0d6efd; padding: 12px; border: 1px solid #0d6efd;">Visit APS Ticketing</a>
+                                            <a href="http://localhost/ticketing/ticketing" style="color: #ffffff; font-size: 16px; font-family: Helvetica, Arial, sans-serif; text-decoration: none; border-radius: 6px; line-height: 20px; display: block; font-weight: 700 !important; white-space: nowrap; background-color: #0d6efd; padding: 12px; border: 1px solid #0d6efd;">Visit APS Ticketing</a>
                                           </td>
                                         </tr>
                                       </tbody>

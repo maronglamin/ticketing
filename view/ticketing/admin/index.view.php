@@ -26,11 +26,10 @@
                                 <tr>
                                     <th>Request_id</th>
                                     <th>Request_Date</th>
+                                    <th>Host</th>
                                     <th>Classified As</th>
                                     <th>Category</th>
-                                    <th>Description</th>
                                     <th>Department</th>
-                                    <th>Host</th>
                                     <th>Requested_By</th>
                                     <th>Status</th>
                                     <th></th>
@@ -45,9 +44,8 @@
                                         <td><strong><?= $value['host'] ?></strong></td>
                                         <td><?= $value['classification'] ?></td>
                                         <td><?= $value['category'] ?></td>
-                                        <td><?= shortText($value['discription'], 25, "...") ?></td>
                                         <td><?= $value['department'] ?></td>
-                                        <td><?= $value['maker_id'] ?></td>
+                                        <td><?= text2cap($value['maker_id']) ?></td>
                                         <td><a href="<?= route('admin/status/ticket?ticketing='. $value['id']) ?>"><strong><?= $value['status'] ?></strong></a></td>
                                         <td>
                                         <form method="post" action="<?= route('admin/delete/ticket')?>" role="button">

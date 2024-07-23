@@ -18,10 +18,16 @@ class ModelData
 
     public static function getall($table, $start, $order = 'id')
     {
-        $user = Session::user();
         return Authenticator::get()
                 ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' order by $order desc limit $start," . Response::PAGE_RECORD)
                 ->get();
+    }
+
+    public static function AssignExist($table, $id)
+    {
+        return Authenticator::get()
+                ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' and id = '{$id}' and ticket_assigned_to != ''")
+                ->find();
     }
 
     public static function getLastID($table)
@@ -39,7 +45,7 @@ class ModelData
                 ->find();
     }
 
-    public static function emailAdd()
+    public static function addUserEmail()
     {
         $email = static::userEmail();
         return $email['email'];

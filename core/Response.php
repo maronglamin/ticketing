@@ -4,7 +4,7 @@ namespace core;
 
 class Response {
 
-    const PROOT = '/bianalysts';
+    const PROOT = '/ticketing';
     const COMPANY_NAME = 'IMS Ticketing';
 
     const NOT_FOUND = 404;

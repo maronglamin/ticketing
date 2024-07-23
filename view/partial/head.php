@@ -18,13 +18,8 @@
     <link href="<?= root() ?>/public/css/main.css" rel="stylesheet">
     <link href="<?= root() ?>/public/css/sb-admin-2.min.css" rel="stylesheet">
     
-    <!-- <link href="/agrobusiness/public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-
     <!-- Font Icon -->
     <link rel="stylesheet" href="<?=root() ?>/public/session/fonts/material-icon/css/material-design-iconic-font.min.css">
-
-    <!-- Main css -->
-    <!-- <link rel="stylesheet" href="<?= root()?>/public/session/css/style.css"> -->
     
 </head>
 

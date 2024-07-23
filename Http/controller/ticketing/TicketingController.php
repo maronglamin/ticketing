@@ -12,6 +12,7 @@ use Http\model\ModelData;
 use Http\forms\Validation;
 use Http\model\TicketingModel;
 use Http\controller\Controller;
+use Http\model\mobifin\MPRmodel;
 
 class TicketingController extends Controller
 {
@@ -26,7 +27,7 @@ class TicketingController extends Controller
             'start' => Paginator::start(),
             'records' => Paginator::paginate('aps_ticketing'),
             'pages' => Paginator::pages('aps_ticketing'),
-            'data' => ModelData::get('aps_ticketing', Session::user(), Paginator::start()),
+            'data' => MPRmodel::getLITS('aps_ticketing', Session::user(), Paginator::start()),
             
         ]);
     }
@@ -70,13 +71,17 @@ class TicketingController extends Controller
             'make_at' => cur_time(),
             'maker_id' => Session::user(),
             'host' => ($_POST['host']),
+            'priority' => ($_POST['priority']),
+            'email' => ($_POST['email']),
+            'ticket_channel' => ($_POST['ticket_channel']),
         ],
         [
             'classification' => 'required',
             'category' => 'required',
             'sub_category' => 'required',
             'department' => 'required',
-            'discription' => 'required'
+            'discription' => 'required',
+            'priority' => 'required'
         ]);
 
         $data['file_path'] = UploadImg::saveFile($instance);
@@ -91,7 +96,7 @@ class TicketingController extends Controller
 
         Authenticator::save('APS_ticketing', $data); 
         
-        MailSender::sendEmail(ModelData::emailAdd(), 'APS Wallet Ticketing_id: '. $data['ticketId'], file_get_contents(base_path('core/mailTemplate.php')));
+        MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
         
         Session::flash('success', 'Request sent successfully');
         return redirect('/ticketing');
@@ -155,6 +160,7 @@ class TicketingController extends Controller
 
         } elseif ($data['status'] === 'Resolved') {
             $data['ticket_resolved_at'] = cur_time();
+            MailSender::sendEmail(sanitize($_POST['email']), 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/resolved.php');
 
         } elseif ($data['status'] === 'Closed') {
             $data['ticket_closed_at'] = cur_time();
@@ -162,6 +168,10 @@ class TicketingController extends Controller
             $data['ticket_cancel_at'] = cur_time();
         } else {
             $data['status'];
+        }
+
+        if (! ModelData::AssignExist('aps_ticketing', sanitize($_POST['id']))) {
+            MailSender::sendEmail($data['ticket_assigned_to'], 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/ticketAssigned.php');
         }
 
         Authenticator::commit('aps_ticketing', sanitize($_POST['id']), $data);  

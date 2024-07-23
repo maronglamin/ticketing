@@ -29,8 +29,8 @@
                                     <th>Machine Name</th>
                                     <th>Classified As</th>
                                     <th>Category</th>
-                                    <th>Description</th>
-                                    <th>Department</th>
+                                    <th>Ticket Channel</th>
+                                    <th>Priority</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -44,8 +44,8 @@
                                         <td><strong><?= $value['host'] ?></strong></td>
                                         <td><?= $value['classification'] ?></td>
                                         <td><?= $value['category'] ?></td>
-                                        <td><?= shortText($value['discription'], 75, "...") ?></td>
-                                        <td><?= $value['department'] ?></td>
+                                        <td><?= $value['ticket_channel'] ?></td>
+                                        <td><?= $value['priority'] ?></td>
                                         <td><a href="<?= route('status/ticket?ticketing='. $value['ticketId']) ?>"><strong><?= $value['status'] ?></strong></a></td>
                                     </tr>
                                 <?php endforeach; ?>
