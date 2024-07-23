@@ -170,12 +170,12 @@ class TicketingController extends Controller
             $data['status'];
         }
 
+        Authenticator::commit('aps_ticketing', sanitize($_POST['id']), $data);  
+
+
         if (! ModelData::AssignExist('aps_ticketing', sanitize($_POST['id']))) {
             MailSender::sendEmail($data['ticket_assigned_to'], 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/ticketAssigned.php');
         }
-
-        Authenticator::commit('aps_ticketing', sanitize($_POST['id']), $data);  
-
         
         Session::flash('success', 'Ticket details updated successfully');
         return redirect('/admin/status/ticket?ticketing='. sanitize($_POST['id']));
