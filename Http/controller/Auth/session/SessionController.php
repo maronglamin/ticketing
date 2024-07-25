@@ -1,11 +1,12 @@
 <?php
 
-namespace Http\controller\Auth\session;
+namespace http\controller\Auth\session;
 
 use core\Session;
 use core\Authenticator;
-use Http\forms\LoginForm;
-use Http\controller\Controller;
+use http\forms\LoginForm;
+use http\controller\Controller;
+
 
 class SessionController extends Controller
 {

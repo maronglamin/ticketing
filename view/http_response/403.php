@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/x-icon" href="/agrobusiness/public/img/favicon.ico" />
-    <title>MLagroness</title>
+    <link rel="icon" type="image/x-icon" href="<?=root()?>/public/img/favicon.ico" />
+    <title>Ticketing | unauthorize</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="/agrobusiness/public/session/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="<?=root()?>/public/session/fonts/material-icon/css/material-design-iconic-font.min.css">
 
     <!-- Main css -->
-    <link rel="stylesheet" href="/agrobusiness/public/session/css/style.css">
+    <link rel="stylesheet" href="<?=root()?>/public/session/css/style.css">
 </head>
 <body>
 <div class="main">
@@ -40,6 +40,6 @@
     </section>
 </div>
 
-<script src="/agrobusiness/public/session/vendor/jquery/jquery.min.js"></script>
-<script src="/agrobusiness/public/session/js/main.js"></script>
+<script src="<?=root()?>/public/session/vendor/jquery/jquery.min.js"></script>
+<script src="<?=root()?>/public/session/js/main.js"></script>
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Http\controller\Auth\session;
+namespace http\controller\Auth\session;
 
 use core\Session;
 use core\Response;
 use core\Paginator;
 use Http\model\Model;
 use core\Authenticator;
-use Http\forms\Validation;
-use Http\model\User\Users;
-use Http\controller\Controller;
+use http\forms\Validation;
+use http\model\User\Users;
+use http\controller\Controller;
 
 class SignedController extends Controller
 {

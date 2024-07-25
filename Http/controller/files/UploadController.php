@@ -1,8 +1,8 @@
 <?php
 
-namespace Http\controller\file;
+namespace http\controller\file;
 
-use Http\controller\Controller;
+use http\controller\Controller;
 
 class UploadController extends Controller
 {

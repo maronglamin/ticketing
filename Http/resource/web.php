@@ -1,13 +1,13 @@
 <?php
 
-use Http\controller\Auth\session\SignedController;
+use http\controller\Auth\session\SignedController;
 use Http\controller\dashboard\DashboardController;
 use Http\controller\ticketing\TicketingController;
-use Http\controller\Auth\session\SessionController;
-use Http\controller\Auth\session\UserSessionController;
-use Http\controller\Auth\registration\RegisterController;
+use http\controller\Auth\session\SessionController;
+use http\controller\Auth\session\UserSessionController;
+use http\controller\Auth\registration\RegisterController;
 use Http\controller\ticketing\MobifinTicketingController;
- 
+
 
 $router->get('/', [SessionController::class, 'index'])->only('guess');
 $router->post('/session', [SessionController::class, 'store']);

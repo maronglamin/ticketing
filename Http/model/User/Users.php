@@ -1,9 +1,9 @@
 <?php
 
-namespace Http\model\User;
+namespace http\model\User;
 
 use core\Session;
-use Http\model\Model;
+use http\model\Model;
 
 class Users
 {

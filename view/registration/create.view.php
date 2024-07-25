@@ -3,7 +3,7 @@
         <div class="signup-content">
             <div class="signin-image">
                 <figure><img src="<?=root()?>/public/session/images/signin-image.jpg" alt="sing up image"></figure>
-                <a href="../" class="signup-image-link">Already a member, sign in</a>
+                <a href="<?=route('')?>" class="signup-image-link">Already a member, sign in</a>
             </div>
             <div class="signup-form">
             <h2 class="form-title">Register</h2>

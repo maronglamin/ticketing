@@ -1,14 +1,13 @@
 <?php
 
-namespace Http\controller\Auth\session;
+namespace http\controller\Auth\session;
 
 use core\Session;
 use core\Authenticator;
-use Http\forms\Validation;
-use Http\model\User\Users;
-use Http\model\dept\Subject;
-use Http\controller\Controller;
-use Http\model\dept\ClassModel;
+use http\forms\Validation;
+use http\model\User\Users;
+use http\controller\Controller;
+
 
 class UserSessionController extends Controller
 {

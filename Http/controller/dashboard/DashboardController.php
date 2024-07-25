@@ -1,9 +1,9 @@
 <?php
 
-namespace Http\controller\dashboard;
+namespace http\controller\dashboard;
 
 use core\Session;
-use Http\controller\Controller;
+use http\controller\Controller;
 
 class dashboardController extends Controller
 {

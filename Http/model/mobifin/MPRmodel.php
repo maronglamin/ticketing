@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\model\mobifin;
+namespace http\model\mobifin;
 
 use core\Session;
 use core\Response;

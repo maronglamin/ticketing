@@ -1,12 +1,13 @@
 <?php
 
-namespace Http\controller\Auth\registration;
+namespace http\controller\Auth\registration;
 
 use core\Session;
 use core\Authenticator;
-use Http\forms\LoginForm;
-use Http\forms\Validation;
+use http\forms\LoginForm;
+use http\forms\Validation;
 use Http\controller\Controller;
+
 
 class RegisterController extends Controller 
 {

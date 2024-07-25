@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\controller\ticketing;
+namespace http\controller\ticketing;
 
 use core\Session;
 use core\Response;
@@ -8,12 +8,12 @@ use core\Paginator;
 use core\UploadImg;
 use core\MailSender;
 use core\Authenticator;
-use Http\model\ModelData;
-use Http\forms\Validation;
-use Http\model\TicketingModel;
-use Http\controller\Controller;
-use Http\model\mobifin\MPRmodel;
-use Http\model\mobifin\CategoryModel;
+use http\model\ModelData;
+use http\forms\Validation;
+use http\model\TicketingModel;
+use http\controller\Controller;
+use http\model\mobifin\MPRmodel;
+use http\model\mobifin\CategoryModel;
 
 
 class MobifinTicketingController extends Controller

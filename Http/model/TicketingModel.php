@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\model;
+namespace http\model;
 
 use core\Session;
 use core\Response;

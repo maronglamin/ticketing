@@ -24,7 +24,7 @@ require base_path('bootstrap.php');
 
 $router = new Router();
 
-$routes = require base_path('Http/resource/web.php');
+$routes = require base_path('http/resource/web.php');
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
 $method = isset($_POST['_method']) ? $_POST['_method'] : $_SERVER['REQUEST_METHOD'];
