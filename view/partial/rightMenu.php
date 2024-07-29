@@ -22,7 +22,7 @@
     </a>
     </li>
 
-    <?php if(Http\model\User\Users::hasRole('Manager') || Http\model\User\Users::hasRole('Supervisor')) :?>
+    <?php if(http\model\User\Users::hasRole('Manager') || http\model\User\Users::hasRole('Supervisor')) :?>
         <li class="nav-item active">
         <a class="nav-link" href="<?= route('ticketing')?>">
             <span>APSW Ticketing</span>
@@ -64,7 +64,7 @@
         </li>
     <?php endif;?>
 
-    <?php if(Http\model\User\Users::hasDepartment('IT')) :?>
+    <?php if(http\model\User\Users::hasDepartment('IT')) :?>
         <li class="nav-item">
             <a 
                 class="nav-link collapsed" 

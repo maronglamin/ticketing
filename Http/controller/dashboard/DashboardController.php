@@ -5,7 +5,7 @@ namespace http\controller\dashboard;
 use core\Session;
 use http\controller\Controller;
 
-class dashboardController extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {

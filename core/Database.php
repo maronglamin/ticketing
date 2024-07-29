@@ -2,7 +2,7 @@
 
 namespace core;
 
-use \PDO;
+use PDO;
 use core\Response;
 
 class Database {
@@ -13,7 +13,7 @@ class Database {
     public function __construct($config, $username = Response::DB_USER, $password = Response::DB_PASSWORD)
     {
         $dsn = 'mysql:'. http_build_query($config, '', ';');
-        
+
         $this->connection = new PDO($dsn, $username, $password, [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);

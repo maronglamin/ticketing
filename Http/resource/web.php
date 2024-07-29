@@ -1,12 +1,12 @@
 <?php
 
 use http\controller\Auth\session\SignedController;
-use Http\controller\dashboard\DashboardController;
-use Http\controller\ticketing\TicketingController;
+use http\controller\dashboard\DashboardController;
+use http\controller\ticketing\TicketingController;
 use http\controller\Auth\session\SessionController;
 use http\controller\Auth\session\UserSessionController;
 use http\controller\Auth\registration\RegisterController;
-use Http\controller\ticketing\MobifinTicketingController;
+use http\controller\ticketing\MobifinTicketingController;
 
 
 $router->get('/', [SessionController::class, 'index'])->only('guess');

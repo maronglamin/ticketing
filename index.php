@@ -3,13 +3,11 @@
 use core\Router;
 use core\Session;
 use core\DateTimeDiff;
-use Http\model\ModelData;
 use core\ValidationException;
 
 ob_start();
 
-const BASE_PATH = __DIR__. DIRECTORY_SEPARATOR;
-
+const BASE_PATH = __DIR__ . DIRECTORY_SEPARATOR;
 require BASE_PATH .'core/function.php';
 
 session_start();
@@ -21,6 +19,7 @@ spl_autoload_register(function ($class) {
     require base_path("{$class}.php");
 });
 require base_path('bootstrap.php');
+
 
 $router = new Router();
 

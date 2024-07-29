@@ -93,7 +93,6 @@ class TicketingController extends Controller
             )->throw();
         }
         
-
         Authenticator::save('APS_ticketing', $data); 
         
         MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');

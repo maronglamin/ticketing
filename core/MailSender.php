@@ -14,7 +14,7 @@ class MailSender
     {
 
         $mail = new PHPMailer(true);
-
+        
         try {
 
             //Server settings

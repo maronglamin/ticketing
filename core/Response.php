@@ -11,7 +11,7 @@ class Response {
     const FORBIDEN = 403;
 
     const HOSTNAME = 'localhost';
-    const PORT = '3306';
+    const PORT = '330';
     const DB_NAME = 'mobifin_dataset';
     const DB_PASSWORD = '';
     const DB_USER = 'root';
