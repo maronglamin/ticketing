@@ -6,8 +6,7 @@ use core\Session;
 use core\Authenticator;
 use http\forms\LoginForm;
 use http\forms\Validation;
-use Http\controller\Controller;
-
+use http\controller\Controller;
 
 class RegisterController extends Controller 
 {
