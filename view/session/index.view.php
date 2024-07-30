@@ -55,7 +55,7 @@
             </div>
             
             <div class="signup-image">
-                <figure><img src="<?=root()?>/public/session/images/signup-image.jpg" alt="sing up image"></figure>
+                <figure><img src="/public/session/images/signup-image.jpg" style="height:268px" alt="sing up image"></figure>
                 <a href="session/create" class="signup-image-link">Not a member, register</a>
             </div>
 

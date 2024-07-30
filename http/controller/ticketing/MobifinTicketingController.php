@@ -141,9 +141,9 @@ class MobifinTicketingController extends Controller
         }
         
 
-        Authenticator::save('APS_ticketing', $data); 
+        Authenticator::save('aps_ticketing', $data); 
         
-        MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet MPR Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
+        // MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet MPR Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
         
         Session::flash('success', 'Request sent successfully');
         return redirect('/mobifin/new/ticket');

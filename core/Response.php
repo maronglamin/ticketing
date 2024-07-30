@@ -10,10 +10,10 @@ class Response {
     const NOT_FOUND = 404;
     const FORBIDEN = 403;
 
-    const HOSTNAME = 'localhost';
-    const PORT = '330';
+    const HOSTNAME = '127.0.0.1';
+    const PORT = '3306';
     const DB_NAME = 'mobifin_dataset';
-    const DB_PASSWORD = '';
+    const DB_PASSWORD = 'Apsw321';
     const DB_USER = 'root';
     const CHARSET = 'utf8';
 

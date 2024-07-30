@@ -93,9 +93,9 @@ class TicketingController extends Controller
             )->throw();
         }
         
-        Authenticator::save('APS_ticketing', $data); 
+        Authenticator::save('aps_ticketing', $data); 
         
-        MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
+        // MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
         
         Session::flash('success', 'Request sent successfully');
         return redirect('/ticketing');
@@ -159,7 +159,7 @@ class TicketingController extends Controller
 
         } elseif ($data['status'] === 'Resolved') {
             $data['ticket_resolved_at'] = cur_time();
-            MailSender::sendEmail(sanitize($_POST['email']), 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/resolved.php');
+            // MailSender::sendEmail(sanitize($_POST['email']), 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/resolved.php');
 
         } elseif ($data['status'] === 'Closed') {
             $data['ticket_closed_at'] = cur_time();
@@ -172,9 +172,9 @@ class TicketingController extends Controller
         Authenticator::commit('aps_ticketing', sanitize($_POST['id']), $data);  
 
 
-        if (! ModelData::AssignExist('aps_ticketing', sanitize($_POST['id']))) {
-            MailSender::sendEmail($data['ticket_assigned_to'], 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/ticketAssigned.php');
-        }
+        // if (! ModelData::AssignExist('aps_ticketing', sanitize($_POST['id']))) {
+            // MailSender::sendEmail($data['ticket_assigned_to'], 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/ticketAssigned.php');
+        // }
         
         Session::flash('success', 'Ticket details updated successfully');
         return redirect('/admin/status/ticket?ticketing='. sanitize($_POST['id']));

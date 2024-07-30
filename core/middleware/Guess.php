@@ -9,7 +9,7 @@ class Guess {
     public function handle() 
     {
         if ($_SESSION['user'] ?? false ) {
-            header('Location: ' . Response::PROOT);
+            header('Location: ' . Response::PROOT . '/');
             exit();
         }
     }

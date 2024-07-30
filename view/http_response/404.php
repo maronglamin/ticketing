@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/x-icon" href="<?=root()?>/public/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico" />
     <title>Ticketing | page not found</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="<?=root()?>/public/session/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/session/fonts/material-icon/css/material-design-iconic-font.min.css">
 
     <!-- Main css -->
-    <link rel="stylesheet" href="<?=root()?>/public/session/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/public/session/css/style.css">
 </head>
 <body>
 
@@ -29,13 +29,13 @@
                         <li>Request for the new address to the intended page</li>
                         <li>Contact the system admin about the issue.</li>
                     </ul>
-                    <a href="<?=root()?>/ticketing/dashboard" class="form-submit">Home</a>
+                    <a href="/ticketing/dashboard" class="form-submit">Home</a>
 
             </div>
             
             <div class="signup-image">
-                <figure><img src="<?=root()?>/public/session/images/signup-image.jpg" alt="sing up image"></figure>
-                <a href="<?=root()?>/student/enrolled" class="signup-image-link">Go to HOME to start afresh</a>
+                <figure><img type="text/css" src="/public/session/images/signup-image.jpg" alt="sing up image"></figure>
+                <a href="/ticketing/dashboard" class="signup-image-link">Go to HOME to start afresh</a>
             </div>
 
     </div>

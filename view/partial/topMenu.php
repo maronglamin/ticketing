@@ -65,7 +65,7 @@
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= text2cap(core\Session::user())?></span>
                         <img 
                             class="img-profile rounded-circle" 
-                            src="<?= root() ?>/public/img/undraw_profile.svg">
+                            src="/public/img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div 
