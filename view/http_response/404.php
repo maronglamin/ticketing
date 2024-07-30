@@ -42,5 +42,5 @@
 </div>
 </section>
 </div>
-<script src="<?=root()?>/public/session/vendor/jquery/jquery.min.js"></script>
-<script src="<?=root()?>/public/session/js/main.js"></script>
+<script src="/public/session/vendor/jquery/jquery.min.js"></script>
+<script src="/public/session/js/main.js"></script>
