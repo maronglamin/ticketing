@@ -24,44 +24,14 @@
 
     <?php if(http\model\User\Users::hasRole('Manager') || http\model\User\Users::hasRole('Supervisor')) :?>
         <li class="nav-item active">
-        <a class="nav-link" href="<?= route('ticketing')?>">
-            <span>APSW Ticketing</span>
-        </a>
-        </li>
-        <li class="nav-item active">
         <a class="nav-link" href="<?= route('mobifin/new/ticket')?>">
-            <span>APSW MPR</span>
+            <span>Ticketing</span>
         </a>
         </li>
         
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <li class="nav-item">
-            <a 
-                class="nav-link collapsed" 
-                href="#" 
-                data-toggle="collapse" 
-                data-target="#collapseTicketing" 
-                aria-expanded="true" 
-                aria-controls="collapseTicketing">
-                <span>APS Wallet Ticketing</span>
-            </a>
-
-            <div 
-                id="collapseTicketing" 
-                class="collapse" 
-                aria-labelledby="headingTicketing" 
-                data-parent="#accordionSidebar">
-                
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Staff Ticketing</h6>
-                    <a class="collapse-item" href="<?= route('ticketing')?>">APSW Ticketing</a>
-                    <a class="collapse-item" href="<?= route('new/ticket')?>">New Ticket</a>
-                    <a class="collapse-item" href="<?= route('mobifin/new/ticket')?>">New MPR</a>
-                </div>
-            </div>
-        </li>
     <?php endif;?>
 
     <?php if(http\model\User\Users::hasDepartment('IT')) :?>

@@ -164,7 +164,7 @@
                             </div>
 
                             <div class="col-lg-10 mt-5">
-                                <?php if (!empty($ticket['file_path']) && $ticket['file_path'] !== '/bianalysts/'):?>
+                                <?php if (!empty($ticket['file_path']) && $ticket['file_path'] !== '/ticketing/'):?>
                                     <p>The attachment file</p>
                                     <img src="<?= $ticket['file_path']?>" style="height:auto; width:700px" alt="Attachment">
                                 <?php endif;?>

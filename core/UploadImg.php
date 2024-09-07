@@ -25,7 +25,7 @@ class UploadImg
             move_uploaded_file($_FILES['upload_file']['tmp_name'], $upload_path);
         }
         
-        return root(). '/' . $upload_path;
+        return '/' . $upload_path;
 
     }
 }

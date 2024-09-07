@@ -43,7 +43,7 @@
                             type="password"
                             name="password"
                             id="password"
-                            placeholder="Password">
+                            placeholder="New Password">
 
                     </div>
                     <div class="form-group">
@@ -55,7 +55,7 @@
                             type="password"
                             name="password_confirmed"
                             id="password"
-                            placeholder="Confirm Password">
+                            placeholder="Confirm New Password">
 
                     </div>
 
@@ -79,7 +79,7 @@
             </div>
             
             <div class="signup-image">
-                <figure><img src="<?=root()?>/public/session/images/signup-image.jpg" alt="sing up image"></figure>
+                <figure><img src="/public/session/images/signup-image.jpg" alt="sing up image"></figure>
                 <a href="<?= route('dashboard')?>" class="signup-image-link">Cancel</a>
 
             </div>

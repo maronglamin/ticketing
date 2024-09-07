@@ -15,7 +15,6 @@ use http\controller\Controller;
 use http\model\mobifin\MPRmodel;
 use http\model\mobifin\CategoryModel;
 
-
 class MobifinTicketingController extends Controller
 {
     public function new()
@@ -23,8 +22,8 @@ class MobifinTicketingController extends Controller
         return view('ticketing/mobifin/new.mobifin.view', [
             'title' => 'New MPR',
             'errors' => Session::get('errors'),
-            'heading' => 'New MPR (Mobifin Platform Requests)',
-            'instruction' => 'Send a new ticket request that relates to mobifin platform.',
+            'heading' => 'New Request',
+            'instruction' => 'Send a new request',
             'ticketing_id' => ModelData::getLastID('aps_ticketing'),
             'page' => Paginator::page(),
             'start' => Paginator::start(),
@@ -108,11 +107,8 @@ class MobifinTicketingController extends Controller
     public function storeTicket()
     {
         $instance = Validation::validate($data = [
-            'classification' => sanitize($_POST['classification']),
-            'category' => sanitize($_POST['category']), 
-            'sub_category' => sanitize($_POST['sub_category']),       
+            'summary' => sanitize($_POST['summary']),
             'department' => sanitize($_POST['department']),
-            'source' => sanitize($_POST['source']),
             'discription' => sanitize($_POST['discription']),
             'ticketId' => sanitize($_POST['ticketId']),
             'make_at' => cur_time(),
@@ -123,9 +119,7 @@ class MobifinTicketingController extends Controller
             'ticket_channel' => ($_POST['ticket_channel']),
         ],
         [
-            'classification' => 'required',
-            'category' => 'required',
-            'sub_category' => 'required',
+            'summary' => 'required',
             'department' => 'required',
             'discription' => 'required',
             'priority' => 'required'
