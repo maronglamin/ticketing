@@ -10,15 +10,15 @@
             <div class="card mb-4">
 
                 <div class="card-header">
-                    <a href="<?= route('ticketing') ?>" class="btn btn-sm btn-primary">Back</a>
+                    <a href="<?= route('aps-request') ?>" class="btn btn-sm btn-primary">Back</a>
                 </div>
 
                 <div class="card-body">
                     <?=flash('success')?>
-                    <h3 class="text-gray-700 text-center">Note: Request is only meant for local Support Team</h3>
-                    <p class="mb-4 text-center">All mobile wallet and mobifin request should sent using the APW MPR Ticketing</p>
+                    <h3 class="text-gray-700 text-center">Note: The  following information is required for the request.</h3>
+                    <p class="mb-4 text-center">All staff in your department will see your request and will notified via email.</p>
 
-                    <form action="<?= route("saved/ticket") ?>" class="ml-5 mr-5" method="post" enctype="multipart/form-data">
+                    <form action="<?= route("mobifin/ticket/save") ?>" method="post" enctype="multipart/form-data">
                         <div class="row">
                         <?php foreach($ticketing_id as $id): 
                             $tid = $id['ticket_id'];?>
@@ -26,72 +26,19 @@
 
                             <input type="hidden" name="ticketId" value="<?= "APSW-T" . ($tid + 1) ?>">
                             <input type="hidden" name="host" value="<?= clientHost() ?>">
-                            <input type="hidden" name="email" value="<?= Http\model\ModelData::addUserEmail() ?>">
-                            <input type="hidden" name="ticket_channel" value="LOCAL_IT_SUPPORT">
+                            <input type="hidden" name="email" value="<?= http\model\ModelData::addUserEmail() ?>">
+                            <input type="hidden" name="ticket_channel" value="MPR">
 
-                            <div class="col-lg-12 mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="classification">Classification</label>
-                                    </div>
-                                    <select class="custom-select" name="classification" id="classification">
-                                        <option value="<?= old('classification')?>"><?= ((isset($_POST['classification']) ? $_POST['classification'] : old('classification')))?></option>
-                                        <option value="Request">Request</option>
-                                        <option value="Incident">Incident</option>
-                                    </select>
-                                </div>
-
-                                <?php if(isset($errors['classification'])):?>
-                                    <div><small style="color:red"><?=$errors['classification']?></small></div>
+                            <div class="col-lg-12 col-sm-12 mb-3">
+                                <label for="summary">Summary Header Message</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Summary" name="summary" id="summary">
+                                
+                                <?php if(isset($errors['summary'])):?>
+                                    <div><small style="color:red"><?=$errors['summary']?></small></div>
                                 <?php endif;?>
                             </div>
 
-                            <div class="col-lg-12 mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="category">Category</label>
-                                    </div>
-                                    <select class="custom-select" name="category" id="category">
-                                    <option value="<?= old('category')?>"><?= ((isset($_POST['category']) ? $_POST['category'] : old('category')))?></option>
-                                    <option value="Domain">Domain</option>
-                                        <option value="Networking">Networking</option>
-                                        <option value="Computer Hardware">Computer Hardware</option>
-                                        <option value="System Access">System Access</option>
-                                        <option value="System Access">Others</option>
-                                    </select>
-                                </div>
-
-                                <?php if(isset($errors['category'])):?>
-                                    <div><small style="color:red"><?=$errors['category']?></small></div>
-                                <?php endif;?>
-                            </div>
-
-                            <div class="col-lg-12 mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="sub_category">Sub Category</label>
-                                    </div>
-                                    <select class="custom-select" name="sub_category" id="sub_category">
-                                    <option value="<?= old('sub_category')?>"><?= ((isset($_POST['sub_category']) ? $_POST['sub_category'] : old('sub_category')))?></option>
-                                        <option value="Email Issue">Email Issue</option>
-                                        <option value="Email Blocked">Blocked Email</option>
-                                        <option value="Email Blocked">mail Incorrect Timestamp</option>
-                                        <option value="Internet required">Internet required</option>
-                                        <option value="Internet required">Internet Access Denied</option>
-                                        <option value="Replace network Cable">Replace network Cable</option>
-                                        <option value="Hardware Replacement">Faulty Hardware</option>
-                                        <option value="Hardware Replacement">Hardware Replacement</option>
-                                        <option value="New Hardware Request">Modify User</option>
-                                        <option value="OTHERS">Others</option>
-                                    </select>
-                                </div>
-
-                                <?php if(isset($errors['sub_category'])):?>
-                                    <div><small style="color:red"><?=$errors['sub_category']?></small></div>
-                                <?php endif;?>
-                            </div>
-
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-12 col-sm-12 mb-3">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="department">Department</label>
@@ -100,12 +47,13 @@
                                     <option value="<?= old('department')?>"><?= ((isset($_POST['department']) ? $_POST['department'] : old('department')))?></option>
                                         <option value="Operations">Operations</option>
                                         <option value="Compliance">Compliance</option>
-                                        <option value="Compliance">Call Center</option>
+                                        <option value="Call Center">Call Center</option>
                                         <option value="APS Int. Reconciliation Office">APS Int. Reconciliation Office</option>
                                         <option value="Agent Operations">Agent Operations</option>
                                         <option value="Business Development">Business Development</option>
-                                        <option value="Business Development">Finance</option>
-                                        <option value="Business Development">HR</option>
+                                        <option value="Finance">Finance</option>
+					<option value="HR">HR</option>
+                                        <option value="IT Support">IT Support</option>
                                     </select>
                                 </div>
 
@@ -115,27 +63,9 @@
                             </div>
 
 
-                            <div class="col-lg-12 mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="priority">Priority</label>
-                                    </div>
-                                    <select class="custom-select" name="priority" id="priority">
-                                    <option value="<?= old('priority')?>"><?= ((isset($_POST['priority']) ? $_POST['priority'] : old('priority')))?></option>
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                    </select>
-                                </div>
-
-                                <?php if(isset($errors['priority'])):?>
-                                    <div><small style="color:red"><?=$errors['priority']?></small></div>
-                                <?php endif;?>
-                            </div>
-
-                            <div class="col-lg-12 mb-2">
+                            <div class="col-lg-12 col-sm-12 mb-2">
                                 <label for="discription">Discription</label>
-                                <textarea name="discription" id="discription" placeholder="Narration..." class="form-control" value="<?= old('discription')?>"></textarea>
+                                <textarea name="discription" id="discription" rows="7" placeholder="Narration..." class="form-control" value="<?= old('discription')?>"></textarea>
                                 <small>Detail down the issue/concern</small>
 
                                 <?php if(isset($errors['discription'])):?>
@@ -143,10 +73,10 @@
                                 <?php endif;?>
                             </div>
 
-                            <div class="col-lg-12 mt-3">
+                            <div class="col-lg-12 col-sm-12 mt-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Attach image/screenshot</span>
+                                        <span class="input-group-text">Attach</span>
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="upload_file" name="upload_file">
@@ -161,9 +91,27 @@
                                 <?php endif;?>
                             </div>
 
+                            <div class="col-lg-12 col-sm-12 mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="priority">Priority *</label>
+                                    </div>
+                                    <select class="custom-select" name="priority" id="priority">
+                                    <option value="<?= old('priority')?>"><?= ((isset($_POST['priority']) ? $_POST['priority'] : old('priority')))?></option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                    </select>
+                                </div>
 
-                            <div class="col-lg-12">
-                                <input type="submit" value="Submit" class="btn btn-success mt-3">
+                                <?php if(isset($errors['priority'])):?>
+                                    <div><small style="color:red"><?=$errors['priority']?></small></div>
+                                <?php endif;?>
+                            </div>
+
+
+                            <div class="col-lg-12 col-sm-12">
+                                <input type="submit" value="Submit" class="btn btn-primary mt-3">
                             </div>
 
                         </div>

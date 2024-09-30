@@ -38,7 +38,7 @@ $router->patch('/session/user/role', [UserSessionController::class, 'store'])->o
 $router->get('/dashboard', [DashboardController::class, 'index'])->only('auth');
 
 # Ticketing controller 
-$router->get('/ticketing', [TicketingController::class, 'index'])->only('auth');
+$router->get('/aps-request', [TicketingController::class, 'index'])->only('auth');
 $router->get('/admin/ticketing', [TicketingController::class, 'adminIndex'])->only('auth');
 $router->get('/new/ticket', [TicketingController::class, 'newTicket'])->only('auth');
 $router->get('/status/ticket', [TicketingController::class, 'status'])->only('auth');

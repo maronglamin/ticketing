@@ -31,6 +31,7 @@ class Paginator {
 
     public static function pagination($table, $order = 'id', $optionalCol = '', $optionalField = '')
     {
+        $department = Session::department();
         return Authenticator::get()
                 ->query("SELECT count(*) from $table where soft_deleted = 'NTDEL' ORDER BY $order")
                 ->find();

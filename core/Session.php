@@ -2,6 +2,8 @@
 
 namespace core;
 
+use http\model\User\Users;
+
 class Session 
 {
     public static function has($key)
@@ -68,6 +70,11 @@ class Session
     public static function name()
     {
         return empty($_SESSION) ? authorize(false) : $_SESSION['user']['name'];
+    }
+
+    public static function department()
+    {
+        return empty($_SESSION) ? authorize(false) : Users::currentUser()['department'];
     }
 
     public static function visible()

@@ -11,54 +11,54 @@
             <div class="card mb-4">
 
                 <div class="card-header">
-                    <a href="<?= route('ticketing') ?>" class="btn btn-sm btn-primary">Back</a>
+                    <a href="<?= route('aps-request') ?>" class="btn btn-sm btn-primary">Back</a>
                 </div>
 
                 <div class="card-body">
                     <form action="<?= route("saved/ticket") ?>" method="post">
                         <div class="row">
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-10 col-sm-10">
                                 <label for="classification">Classification</label>
-                                <select name="classification" id="classification" disabled class="form-control form-sm mt-1 mb-1">
+                                <select name="classification" id="classification" disabled class="form-control form-sm">
                                     <option value=""><?= $ticket['classification']?></option>
                                 </select>
 
                             </div>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-10 col-sm-10 mt-2">
                                 <label for="category">Category</label>
-                                <select name="category" id="category" disabled class="form-control form-sm mt-1 mb-1">
+                                <select name="category" id="category" disabled class="form-control form-sm">
                                 <option value=""><?= $ticket['category']?></option>
-                                    
+                                  
                                 </select>
                             </div>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-10 col-sm-10 mt-2">
                                 <label for="category">Sub Category</label>
-                                <select name="category" id="category" disabled class="form-control form-sm mt-1 mb-1">
+                                <select name="category" id="category" disabled class="form-control form-sm">
                                 <option value=""><?= $ticket['sub_category']?></option>
                                     
                                 </select>
                             </div>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-10 col-sm-10 mt-2">
                                 <label for="department">Department</label>
-                                <select name="department" id="department" disabled class="form-control form-sm mt-1 mb-1">
+                                <select name="department" id="department" disabled class="form-control form-sm">
                                 <option value=""><?= $ticket['department']?></option>
                                     
                                 </select>
 
                             </div>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-10 col-sm-10 mt-2">
                                 <label for="discription">Discription</label>
                                 <textarea name="discription" id="discription" disabled placeholder="Narration..." class="form-control"><?= $ticket['discription']?></textarea>
 
                             </div>
 
-                            <div class="col-lg-10 mt-5">
-                                <?php if (!empty($ticket['file_path']) && $ticket['file_path'] !== '/bianalysts/'):?>
+                            <div class="col-lg-10 col-sm-10 mt-5">
+                                <?php if (!file_exists($ticket['file_path'])): ?>
                                     <p>The attachment file</p>
                                     <img src="<?= $ticket['file_path']?>" style="height:110px; width:300px" alt="Attachment">
                                 <?php endif;?>

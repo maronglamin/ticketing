@@ -6,7 +6,6 @@ use core\Session;
 use core\Response;
 use core\Paginator;
 use core\UploadImg;
-use core\MailSender;
 use core\Authenticator;
 use http\model\ModelData;
 use http\forms\Validation;
@@ -117,6 +116,7 @@ class MobifinTicketingController extends Controller
             'priority' => ($_POST['priority']),
             'email' => ($_POST['email']),
             'ticket_channel' => ($_POST['ticket_channel']),
+            'user_department' => Session::department()
         ],
         [
             'summary' => 'required',
@@ -124,6 +124,17 @@ class MobifinTicketingController extends Controller
             'discription' => 'required',
             'priority' => 'required'
         ]);
+
+        $email_detail = [
+            'ticket_id' => sanitize($_POST['ticketId']),
+            'subject' => sanitize($_POST['ticketId']). ' '. sanitize($_POST['summary']),
+            'mail_body' => sanitize($_POST['discription']),
+            'recipient' => ($_POST['email']),
+            'copied_user' => Response::DEFUALT_COPIED_USER,
+            'created_at' => cur_time(),
+            'updated_at' => cur_time(),
+            'remark' => 'Ticket raise  by user '.sanitize($_POST['email'])  .' on '.sanitize($_POST['summary']) . ' using  '.sanitize($_POST['host']) .' machine IP address',
+        ];
 
         $data['file_path'] = UploadImg::saveFile($instance);
 
@@ -136,11 +147,11 @@ class MobifinTicketingController extends Controller
         
 
         Authenticator::save('aps_ticketing', $data); 
-        
-        // MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet MPR Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
-        
+
+        Authenticator::save('queue_email', $email_detail); 
+                
         Session::flash('success', 'Request sent successfully');
-        return redirect('/mobifin/new/ticket');
+        return redirect('/aps-request');
         
 
     }

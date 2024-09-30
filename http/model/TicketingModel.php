@@ -8,11 +8,11 @@ use core\Authenticator;
 
 class TicketingModel 
 {
-    public static function getTicket($user, $ticket_id)
+    public static function getTicket($ticket_id)
     {
         $user = Session::user();
         return Authenticator::get()
-                ->query("SELECT * FROM aps_ticketing WHERE soft_deleted = 'NTDEL' AND maker_id = '{$user}' AND ticketId = '{$ticket_id}'")
+                ->query("SELECT * FROM aps_ticketing WHERE soft_deleted = 'NTDEL' AND ticketId = '{$ticket_id}'")
                 ->get();
     }
 

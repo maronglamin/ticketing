@@ -17,11 +17,11 @@ class Response {
     const DB_USER = 'root';
     const CHARSET = 'utf8';
 
-    const LIVE_HOSTNAME = 'sql203.infinityfree.com';
+    const LIVE_HOSTNAME = '127.0.0.1';
     const LIVE_PORT = '3306';
-    const LIVE_DB_NAME = 'if0_35289337_agrobusiness';
-    const LIVE_DB_PASSWORD = 'nfQpv5W1CsU';
-    const LIVE_DB_USER = 'if0_35289337';
+    const LIVE_DB_NAME = 'mobifin_dataset';
+    const LIVE_DB_PASSWORD = 'Apsw321';
+    const LIVE_DB_USER = 'root';
 
     const DEFAULT_VALIDATION_ERRORS = [
         'required' => '%s is required',
@@ -56,11 +56,22 @@ class Response {
     const STATUS_DISABLED = 3;
     const STATUS_LOCKED = 4;
 
+    # email status
+    const UNSENT_EMAIL = 0;
+    const SENT_EMAIL = 1;
 
-    const STATUS_ASSIGED = ASSIGNED;
-    const STATUS_IN_PROGRESS = WORK-IN-PROGRESS;
-    const STATUS_RESOLVED = RESOLVED;
-    const STATUS_CLOSED = CLOSED;
+    # Email config
+    const EMAIL_HOST = 'apswallet.gm';
+    const EMAIL_USERNAME = 'request@apswallet.gm';
+    const EMAIL_PASSWORD = 'Allah@123';
+    const EMAIL_PORT = 465;
 
+    const EMAIL_FROM_USERNAME = 'APSW IT HELPDESK';
+    const DEFUALT_COPIED_USER = 'modoulamin.marong@apswallet.gm';
+
+    const STATUS_ASSIGED = 'ASSIGNED';
+    const STATUS_IN_PROGRESS = 'WORK-IN-PROGRESS';
+    const STATUS_RESOLVED = 'RESOLVED';
+    const STATUS_CLOSED = 'CLOSED';
 
 }

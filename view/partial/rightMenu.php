@@ -22,9 +22,9 @@
     </a>
     </li>
 
-    <?php if(http\model\User\Users::hasRole('Manager') || http\model\User\Users::hasRole('Supervisor')) :?>
+    <!-- // if(http\model\User\Users::hasRole('Manager') || http\model\User\Users::hasRole('Supervisor')) :?> -->
         <li class="nav-item active">
-        <a class="nav-link" href="<?= route('mobifin/new/ticket')?>">
+        <a class="nav-link" href="<?= route('aps-request')?>">
             <span>Ticketing</span>
         </a>
         </li>
@@ -32,7 +32,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-    <?php endif;?>
+    <!--  // endif;?> -->
 
     <?php if(http\model\User\Users::hasDepartment('IT')) :?>
         <li class="nav-item">

@@ -16,11 +16,12 @@ class MPRmodel
                 ->get();
     }
 
-    public static function getLITS($table, $user, $start, $order = 'id')
+    public static function getLITS($table, $department, $start, $order = 'id')
     {
-        $user = Session::user();
+        $user_department = Session::department();
         return Authenticator::get()
-                ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' AND maker_id = '{$user}' and ticket_channel = 'LOCAL_IT_SUPPORT' order by $order desc limit $start," . Response::PAGE_RECORD)
+                ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' AND department = '{$department}'
+                         OR user_department = '{$user_department}' ORDER BY $order DESC LIMIT $start," . Response::PAGE_RECORD)
                 ->get();
     }
 }

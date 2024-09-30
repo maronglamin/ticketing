@@ -27,7 +27,7 @@ class TicketingController extends Controller
             'start' => Paginator::start(),
             'records' => Paginator::paginate('aps_ticketing'),
             'pages' => Paginator::pages('aps_ticketing'),
-            'data' => MPRmodel::getLITS('aps_ticketing', Session::user(), Paginator::start()),
+            'data' => MPRmodel::getLITS('aps_ticketing', Session::department(), Paginator::start()),
             
         ]);
     }
@@ -112,7 +112,7 @@ class TicketingController extends Controller
             'errors' => Session::get('errors'),
             'heading' => 'Ticket Status',
             'instruction' => 'View ticket status',
-            'ticket_detail' => TicketingModel::getTicket(Session::user(), $ticket_id)
+            'ticket_detail' => TicketingModel::getTicket($ticket_id)
         ]);
     }
 
