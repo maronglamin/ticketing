@@ -13,7 +13,7 @@
                     <?=flash('success')?>
                     <h4 class="text-uppercase">Staff Request</h4>
                 </div>
-
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table 
@@ -26,7 +26,6 @@
                                 <tr>
                                     <th>Request_id</th>
                                     <th>Request_Date</th>
-                                    <th>Host</th>
                                     <th>Classified As</th>
                                     <th>Category</th>
                                     <th>Department</th>
@@ -41,7 +40,6 @@
                                     <tr>
                                         <td><a href="<?= route('admin/status/ticket?ticketing='. $value['id']) ?>"><strong><?= $value['ticketId'] ?></strong></a></td>
                                         <td><?= human($value['make_at']) ?></td>
-                                        <td><strong><?= $value['host'] ?></strong></td>
                                         <td><?= $value['classification'] ?></td>
                                         <td><?= $value['category'] ?></td>
                                         <td><?= $value['department'] ?></td>
@@ -49,18 +47,24 @@
                                         <td><a href="<?= route('admin/status/ticket?ticketing='. $value['id']) ?>"><strong><?= $value['status'] ?></strong></a></td>
                                         <td>
                                         <form method="post" action="<?= route('admin/delete/ticket')?>" role="button">
-                                            <input 
-                                                type="hidden"
-                                                name="_method"
-                                                value="DELETE">
+                                            <?php if (deptPermission('APSW Operations')) :?>
+                                                <i class="fas fa-trash fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                <button disabled class="session-button"><strong>Delete</strong></button>
+                                            <?php else:?>
+                                                <input 
+                                                    type="hidden"
+                                                    name="_method"
+                                                    value="DELETE">
 
-                                            <input 
-                                                type="hidden"
-                                                name="ticket_id"
-                                                value="<?=$value['ticketId']?>">
+                                                <input 
+                                                    type="hidden"
+                                                    name="ticket_id"
+                                                    disabled
+                                                    value="<?=$value['ticketId']?>">
 
-                                            <i class="fas fa-trash fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            <button class="session-button">Delete</button>
+                                                <i class="fas fa-trash fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                <button class="session-button">Delete</button>
+                                            <?php endif;?>
                                         </form>
                                     </td>
                                     </tr>

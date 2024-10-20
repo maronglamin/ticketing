@@ -1,13 +1,15 @@
 <?php
 
+use http\controller\DepartmentController;
 use http\controller\Auth\session\SignedController;
 use http\controller\dashboard\DashboardController;
 use http\controller\ticketing\TicketingController;
 use http\controller\Auth\session\SessionController;
+use http\controller\ticketing\CheckStatusController;
 use http\controller\Auth\session\UserSessionController;
+use http\controller\Emails\EmailNotificationController;
 use http\controller\Auth\registration\RegisterController;
 use http\controller\ticketing\MobifinTicketingController;
-
 
 $router->get('/', [SessionController::class, 'index'])->only('guess');
 $router->post('/session', [SessionController::class, 'store']);
@@ -45,6 +47,9 @@ $router->get('/status/ticket', [TicketingController::class, 'status'])->only('au
 $router->get('/admin/status/ticket', [TicketingController::class, 'AdminStatus'])->only('auth');
 
 $router->post('/saved/ticket', [TicketingController::class, 'store'])->only('auth');
+// each user can update the ticket status.
+$router->post('/status/change', [TicketingController::class, 'statusChange'])->only('auth');
+
 $router->patch('/admin/saved/ticket', [TicketingController::class, 'update'])->only('auth');
 $router->delete('/admin/delete/ticket', [TicketingController::class, 'destroy'])->only('auth');
 
@@ -58,3 +63,16 @@ $router->post('/mobifin/ticket/save', [MobifinTicketingController::class, 'store
 
 $router->delete('/mobifin/category/delete', [MobifinTicketingController::class, 'destroyCategory'])->only('auth');
 $router->delete('/mobifin/subcategory/delete', [MobifinTicketingController::class, 'destroySubCategory'])->only('auth');
+
+$router->get('/email/queued', [EmailNotificationController::class, 'queued'])->only('auth');
+
+$router->get('/operations/checklist/new', [CheckStatusController::class, 'newTicketStatus'])->only('auth');
+$router->get('/operations/checklist/onhold', [CheckStatusController::class, 'onHoldTicketStatus'])->only('auth');
+$router->get('/operations/checklist/inprogress', [CheckStatusController::class, 'inprogressTicketStatus'])->only('auth');
+$router->get('/operations/checklist/resolved', [CheckStatusController::class, 'resolvedTicketStatus'])->only('auth');
+$router->get('/operations/checklist/closed', [CheckStatusController::class, 'closedTicketStatus'])->only('auth');
+$router->get('/operations/checklist/cancelled', [CheckStatusController::class, 'cancelledTicketStatus'])->only('auth');
+
+
+$router->get('/department/list', [DepartmentController::class, 'index'])->only('auth');
+$router->post('/department/create/new', [DepartmentController::class, 'store'])->only('auth');

@@ -10,6 +10,7 @@ use core\Authenticator;
 use http\forms\Validation;
 use http\model\User\Users;
 use http\controller\Controller;
+use http\model\DepartmentModel;
 
 class SignedController extends Controller
 {
@@ -34,7 +35,8 @@ class SignedController extends Controller
         return view('session/user.summary.view', [
             'user' => Users::getUser($_GET['id']),
             'title' => 'Edit user',
-            'errors' => Session::get('errors'),
+            'dept' => DepartmentModel::getDepartment(),
+            'errors' => Session::get('errors')
         ]);
     }
 

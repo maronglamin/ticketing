@@ -6,13 +6,16 @@ use core\Session;
 use core\Response;
 use core\Paginator;
 use core\UploadImg;
-use core\MailSender;
+use core\JsonGenerate;
 use core\Authenticator;
 use http\model\ModelData;
 use http\forms\Validation;
 use http\model\TicketingModel;
 use http\controller\Controller;
+use http\model\DepartmentModel;
 use http\model\mobifin\MPRmodel;
+use http\model\RequestTypeModel;
+use customs\TicketDeptPagination;
 
 class TicketingController extends Controller
 {
@@ -21,24 +24,24 @@ class TicketingController extends Controller
         return view('ticketing/index.view', [
             'title' => 'Request Ticketing',
             'errors' => Session::get('errors'),
-            'heading' => 'Aps Wallet IT Request',
-            'instruction' => 'The ticket history',
-            'page' => Paginator::page(),
-            'start' => Paginator::start(),
-            'records' => Paginator::paginate('aps_ticketing'),
-            'pages' => Paginator::pages('aps_ticketing'),
-            'data' => MPRmodel::getLITS('aps_ticketing', Session::department(), Paginator::start()),
+            'heading' => 'APS e-Ticketing',
+            'instruction' => 'The eTicket history for you and your department logs will be displayed below. You can also request a new ticket by clicking the button below.',
+            'page' => TicketDeptPagination::page(),
+            'start' => TicketDeptPagination::start(),
+            'records' => TicketDeptPagination::paginate(),
+            'pages' => TicketDeptPagination::pages(),
+            'data' => MPRmodel::getLITS('aps_ticketing', Session::department(), TicketDeptPagination::start()),
             
         ]);
     }
-
+    
     public function adminIndex()
     {
         return view('ticketing/admin/index.view', [
             'title' => 'Request Ticketing',
             'errors' => Session::get('errors'),
             'heading' => 'HelpDesk Request',
-            'instruction' => 'The ticket history',
+            'instruction' => 'All tickets raise by users will be displayed below. adjust the ticket detils to the categories and classifications.',
             'page' => Paginator::page(),
             'start' => Paginator::start(),
             'records' => Paginator::paginate('aps_ticketing'),
@@ -55,11 +58,13 @@ class TicketingController extends Controller
             'errors' => Session::get('errors'),
             'heading' => 'New IT Request',
             'instruction' => 'Send a new ticket request',
-            'ticketing_id' => ModelData::getLastID('aps_ticketing')
+            'ticketing_id' => ModelData::getLastID('aps_ticketing'),
+            'dept' => DepartmentModel::getDepartment()
+
         ]);
     }
 
-    public function store()
+    public function store() 
     {
         $instance = Validation::validate($data = [
             'classification' => sanitize($_POST['classification']),
@@ -71,9 +76,10 @@ class TicketingController extends Controller
             'make_at' => cur_time(),
             'maker_id' => Session::user(),
             'host' => ($_POST['host']),
-            'priority' => ($_POST['priority']),
-            'email' => ($_POST['email']),
-            'ticket_channel' => ($_POST['ticket_channel']),
+            'upload_file' => sanitize($_POST['']),
+            'priority' => sanitize($_POST['priority']),
+            'email' => sanitize($_POST['email']),
+            'ticket_channel' => sanitize($_POST['ticket_channel']),
         ],
         [
             'classification' => 'required',
@@ -94,9 +100,7 @@ class TicketingController extends Controller
         }
         
         Authenticator::save('aps_ticketing', $data); 
-        
-        // MailSender::sendEmail(ModelData::addUserEmail(), 'APS Wallet Ticketing_id: '. $data['ticketId'], 'view/template/mailTemplate.php');
-        
+                
         Session::flash('success', 'Request sent successfully');
         return redirect('/ticketing');
         
@@ -112,7 +116,7 @@ class TicketingController extends Controller
             'errors' => Session::get('errors'),
             'heading' => 'Ticket Status',
             'instruction' => 'View ticket status',
-            'ticket_detail' => TicketingModel::getTicket($ticket_id)
+            'ticket_detail' => TicketingModel::getTicket($ticket_id),
         ]);
     }
 
@@ -123,7 +127,11 @@ class TicketingController extends Controller
             'errors' => Session::get('errors'),
             'heading' => 'Ticket Status',
             'instruction' => 'View ticket status',
-            'ticket_detail' => TicketingModel::getAllTicket(sanitize($_GET['ticketing']))
+            'ticket_detail' => TicketingModel::getAllTicket(sanitize($_GET['ticketing'])),
+            'parent' => RequestTypeModel::getParent(),
+            'child' => RequestTypeModel::getChild(),
+            'dept' => DepartmentModel::getDepartment()
+            
         ]);
     }
 
@@ -141,11 +149,6 @@ class TicketingController extends Controller
             'priority' => sanitize($_POST['priority']),
         ],
         [
-            'classification' => 'required',
-            'category' => 'required',
-            'sub_category' => 'required',
-            'department' => 'required',
-            'status' => 'required',
             'discription' => 'required'
         ]);
 
@@ -159,7 +162,6 @@ class TicketingController extends Controller
 
         } elseif ($data['status'] === 'Resolved') {
             $data['ticket_resolved_at'] = cur_time();
-            // MailSender::sendEmail(sanitize($_POST['email']), 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/resolved.php');
 
         } elseif ($data['status'] === 'Closed') {
             $data['ticket_closed_at'] = cur_time();
@@ -172,12 +174,56 @@ class TicketingController extends Controller
         Authenticator::commit('aps_ticketing', sanitize($_POST['id']), $data);  
 
 
-        // if (! ModelData::AssignExist('aps_ticketing', sanitize($_POST['id']))) {
-            // MailSender::sendEmail($data['ticket_assigned_to'], 'APS Wallet Ticketing_id: '. sanitize($_POST['ticketId']), 'view/template/ticketAssigned.php');
-        // }
-        
         Session::flash('success', 'Ticket details updated successfully');
         return redirect('/admin/status/ticket?ticketing='. sanitize($_POST['id']));
+    }
+
+    public function statusChange()
+    {
+        $comments = [
+            'username' => Session::user(), 
+            'comment' => sanitize($_POST['comment'])
+        ];
+
+        Validation::validate($data = [
+            'status' => sanitize($_POST['status']),
+            'comment' => JsonGenerate::encodeText($comments)
+        ],
+        [
+            'status' => 'required',
+        ]);
+
+        $userComments = JsonGenerate::getEncodeText(sanitize($_POST['id']), 'comment');
+
+        if (!empty($userComments)){
+            if (json_last_error() === JSON_ERROR_NONE) {
+                JsonGenerate::addComment($comments, 'comment', $userComments['comment']);
+            }
+        }
+
+        if ($data['status'] === Response::STATUS_ASSIGED) {
+            $data['ticket_assigned_at'] = cur_time();
+
+        } elseif ($data['status'] === Response::STATUS_IN_PROGRESS) {
+            $data['ticket_working_in_at'] = cur_time();
+        } elseif ($data['status'] === Response::STATUS_ONHOLD) {
+            $data['ticket_on_hold_at'] = cur_time();
+
+        } elseif ($data['status'] === Response::STATUS_RESOLVED) {
+            $data['ticket_resolved_at'] = cur_time();
+
+        } elseif ($data['status'] === Response::STATUS_CLOSED) {
+            $data['ticket_closed_at'] = cur_time();
+        } elseif ($data['status'] === Response::STATUS_CANCELLED) {
+            $data['ticket_cancel_at'] = cur_time();
+        } else {
+            $data['status'];
+        }
+
+        Authenticator::commit('aps_ticketing', sanitize($_POST['id']), $data);  
+        
+        Session::flash('success', 'Ticket details updated successfully');
+        return redirect('/status/ticket?ticketing='. sanitize($_POST['ticketid']));
     }
 
     public function destroy()

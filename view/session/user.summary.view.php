@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <h2 
+    <!-- <h2 
         class="h3 mb-1 text-gray-800 text-uppercase">
-    </h2>
+    </h2> -->
 
     <div class="row justify-content-center">
         
@@ -95,7 +95,7 @@
                                 </div>
                                 <small>inputs to be confirmed or not</small>
                             </div>
-
+                            
                             <div class="form-group">
                                 <div class="input-group">
                                         <div class="input-group-prepend">
@@ -103,16 +103,9 @@
                                         </div>
                                         <select class="custom-select" name="department" id="department">
                                             <option value="" ><?=($user['department'] !== null)? $user['department'] : ''?></option>
-                                            <option value="Compliance">Compliance</option>
-                                            <option value="Biz dev">Biz dev</option>
-                                            <option value="Operations">Operations</option>
-                                            <option value="Agent Operations">Agent Operations</option>
-                                            <option value="HR">HR</option>
-                                            <option value="APS Reconciliation">APS Reconciliation</option>
-                                            <option value="Call Center">Call Center</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="Treasury">Treasury</option>
-                                            <option value="IT">IT</option>
+                                            <?php foreach($dept as $deptmnt):?>
+                                                <option value="<?=$deptmnt['department_name']?>"><?=$deptmnt['department_name']?></option>
+                                            <?php endforeach;?>
                                         </select>
                                 </div>
 

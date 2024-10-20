@@ -1,10 +1,12 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
-require 'core/phpmailer/src/SMTP.php';
-require 'core/phpmailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/PHPMailer.php';
 
-$mail = new \core\phpmailer\src\PHPMailer(true);
+$mail = new PHPMailer(true);
 
 // Database connection
 $conn = mysqli_connect("127.0.0.1", "root", "Apsw321", "mobifin_dataset");
@@ -17,12 +19,12 @@ while ($row = mysqli_fetch_assoc($result)) {
     try {
 
         $mail->isSMTP();
-        $mail->SMTPDebug = \core\phpmailer\src\SMTP::DEBUG_SERVER;
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->Host = 'apswallet.gm'; // Your SMTP server
         $mail->SMTPAuth = true;
         $mail->Username = 'request@apswallet.gm';
         $mail->Password = 'Allah@123';
-        $mail->setFrom('request@apswallet.gm', 'APSW IT HELPDESK');
+        $mail->setFrom('request@apswallet.gm', 'APS eTicketing HELPDESK');
 
         $mail->addAddress($row['recipient']);
         $mail->Subject = $row['subject'];

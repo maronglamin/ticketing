@@ -73,5 +73,10 @@ class Response {
     const STATUS_IN_PROGRESS = 'WORK-IN-PROGRESS';
     const STATUS_RESOLVED = 'RESOLVED';
     const STATUS_CLOSED = 'CLOSED';
+    const STATUS_NEW = 'NEW';
+    const STATUS_ONHOLD = 'ON HOLD';
+    const STATUS_REOPENED = 'REOPENED';
+    const STATUS_CANCELLED = 'CANCELLED';
 
+    const PARENT_ID = '0';
 }

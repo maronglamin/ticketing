@@ -18,31 +18,13 @@
                     <form action="<?= route("saved/ticket") ?>" method="post">
                         <div class="row">
 
-                            <div class="col-lg-10 col-sm-10">
-                                <label for="classification">Classification</label>
-                                <select name="classification" id="classification" disabled class="form-control form-sm">
-                                    <option value=""><?= $ticket['classification']?></option>
-                                </select>
-
+                            <div class="col-lg-6 col-sm-12">
+                                <label for="classification">Ticket Summary</label>
+                                <input type="text" disabled class="form-control form-sm" value="<?= $ticket['summary']?>">
                             </div>
 
-                            <div class="col-lg-10 col-sm-10 mt-2">
-                                <label for="category">Category</label>
-                                <select name="category" id="category" disabled class="form-control form-sm">
-                                <option value=""><?= $ticket['category']?></option>
-                                  
-                                </select>
-                            </div>
 
-                            <div class="col-lg-10 col-sm-10 mt-2">
-                                <label for="category">Sub Category</label>
-                                <select name="category" id="category" disabled class="form-control form-sm">
-                                <option value=""><?= $ticket['sub_category']?></option>
-                                    
-                                </select>
-                            </div>
-
-                            <div class="col-lg-10 col-sm-10 mt-2">
+                            <div class="col-lg-6 col-sm-12">
                                 <label for="department">Department</label>
                                 <select name="department" id="department" disabled class="form-control form-sm">
                                 <option value=""><?= $ticket['department']?></option>
@@ -51,9 +33,9 @@
 
                             </div>
 
-                            <div class="col-lg-10 col-sm-10 mt-2">
+                            <div class="col-lg-12 col-sm-10">
                                 <label for="discription">Discription</label>
-                                <textarea name="discription" id="discription" disabled placeholder="Narration..." class="form-control"><?= $ticket['discription']?></textarea>
+                                <textarea name="discription" id="discription" disabled placeholder="Narration..." style="height:260px" class="form-control"><?= $ticket['discription']?></textarea>
 
                             </div>
 
@@ -75,10 +57,37 @@
             <div class="card mb-4">
 
                 <div class="card-header">
-                        <h4 class="text-uppercase">Details</h2>
+                        <h4 class="text-uppercase">Change status</h2>
                 </div>
                 <div class="card-body">
-                    
+                    <?php if(!empty(core\JsonGenerate::decodeText($ticket['comment']))):?>
+                        <h5>Comment Initiated by:</h5>
+                        <p><strong><?= core\JsonGenerate::decodeText($ticket['comment'])['username']?></strong></p>
+                        <h5>Current Active Comment:</h5>
+                        <p><strong><?= core\JsonGenerate::decodeText($ticket['comment'])['comment']?></strong></p>
+                    <?php  endif;?>
+
+                    <form action="<?= route("status/change") ?>" method="post" class="mb-2 p-2">
+                        <input type="hidden" name="ticketid" value="<?= $ticket['ticketId']?>">
+                        <input type="hidden" name="id" value="<?= $ticket['id']?>">
+
+                            <label for="status">Status</label>
+                            <select name="status" id="status" class="form-control form-sm">
+                                <option value="">Choose Current status</option>
+                                <option value="<?=core\Response::STATUS_ONHOLD?>"><?=core\Response::STATUS_ONHOLD?></option>
+                                <option value="<?=core\Response::STATUS_IN_PROGRESS?>"><?=core\Response::STATUS_IN_PROGRESS?></option>
+                                <option value="<?=core\Response::STATUS_RESOLVED?>"><?=core\Response::STATUS_RESOLVED?></option>
+                                <option value="<?=core\Response::STATUS_CLOSED?>"><?=core\Response::STATUS_CLOSED?></option>
+                            </select>
+                            <?php if(isset($errors['status'])):?>
+                                    <div><small style="color:red"><?=$errors['status']?></small></div>
+                            <?php endif;?>
+
+                            <label for="comment">Comment</label>
+                                <textarea name="comment" id="comment" placeholder="comment..." style="height:80px" class="form-control mb-2"></textarea>
+
+                        <input type="submit" class="btn btn-sm btn-primary" value="Update">
+                    </form>
 
                         <ul class="list-group mb-4">
                             <li class="list-group-item d-flex justify-content-between align-items-center">

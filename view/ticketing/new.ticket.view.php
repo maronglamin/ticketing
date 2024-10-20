@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <a href="<?= route('aps-request') ?>" class="btn btn-sm btn-primary">Back</a>
                 </div>
-
+                
                 <div class="card-body">
                     <?=flash('success')?>
                     <h3 class="text-gray-700 text-center">Note: The  following information is required for the request.</h3>
@@ -45,15 +45,9 @@
                                     </div>
                                     <select class="custom-select" name="department" id="department">
                                     <option value="<?= old('department')?>"><?= ((isset($_POST['department']) ? $_POST['department'] : old('department')))?></option>
-                                        <option value="Operations">Operations</option>
-                                        <option value="Compliance">Compliance</option>
-                                        <option value="Call Center">Call Center</option>
-                                        <option value="APS Int. Reconciliation Office">APS Int. Reconciliation Office</option>
-                                        <option value="Agent Operations">Agent Operations</option>
-                                        <option value="Business Development">Business Development</option>
-                                        <option value="Finance">Finance</option>
-					<option value="HR">HR</option>
-                                        <option value="IT Support">IT Support</option>
+                                        <?php foreach($dept as $ticketDept):?>
+                                            <option value="<?= $ticketDept['department_name']?>"><?= $ticketDept['department_name']?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
 

@@ -21,7 +21,7 @@
                             <input type="hidden" name="id" value="<?=$_GET['ticketing']?>">
                             <input type="hidden" name="ticketId" value="<?=$ticket['ticketId']?>">
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-sm-12">
                                 <label for="classification">Classification</label>
                                 <select name="classification" id="classification" class="form-control form-sm mt-1 mb-1">
                                     <option value="<?= $ticket['classification']?>"><?= $ticket['classification']?></option>
@@ -35,23 +35,22 @@
 
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-sm-12">
                                 <label for="email">User's Email</label>
                                 <select name="email" id="email" class="form-control form-sm mt-1 mb-1">
                                     <option value="<?= $ticket['email']?>"><?= $ticket['email']?></option>
                                 </select>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-sm-12">
                                 <label for="status">Change Status</label>
                                 <select name="status" id="status" class="form-control form-sm mt-1 mb-1">
                                     <option value="<?= $ticket['status']?>"><?= $ticket['status']?></option>
-                                    <option value="Assigned">Assigned</option>
-                                    <option value="On Hold">On Hold</option>
-                                    <option value="Working In Progress">Working In Progress</option>
-                                    <option value="Resolved">Ticket Resolved</option>
-                                    <option value="Closed">Ticket Closed</option>
-                                    <option value="Cancel">Ticket Cancel</option>
+                                    <option value="<?=core\Response::STATUS_ONHOLD?>"><?=core\Response::STATUS_ONHOLD?></option>
+                                    <option value="<?=core\Response::STATUS_IN_PROGRESS?>"><?=core\Response::STATUS_IN_PROGRESS?></option>
+                                    <option value="<?=core\Response::STATUS_RESOLVED?>"><?=core\Response::STATUS_RESOLVED?></option>
+                                    <option value="<?=core\Response::STATUS_CLOSED?>"><?=core\Response::STATUS_CLOSED?></option>
+                                    <option value="<?=core\Response::STATUS_CANCELLED?>"><?=core\Response::STATUS_CANCELLED?></option>
 
                                     <?php if(isset($errors['status'])):?>
                                         <div><small style="color:red"><?=$errors['status']?></small></div>
@@ -60,7 +59,7 @@
 
                             </div>
 
-                            <div class="col-lg-2">
+                            <div class="col-lg-3 col-sm-12">
                                 <label for="priority">Priority</label>
                                 <select name="priority" id="priority" class="form-control form-sm mt-1 mb-1">
                                     <option value="<?= $ticket['priority']?>"><?= $ticket['priority']?></option>
@@ -72,59 +71,27 @@
 
                             </div>
 
-                            <div class="col-lg-4">
-                                <label for="status">Assign To</label>
-                                <select name="ticket_assigned_to" id="ticket_assigned_to" class="form-control form-sm mt-1 mb-1">
-                                    <option value="<?= $ticket['ticket_assigned_to']?>"><?= $ticket['ticket_assigned_to']?></option>
-                                    <option value="modoulamin.marong@apswallet.gm">ML. Marong</option>
-                                    <option value="it@apsinternational.com">F. Susso</option>
-                                    <option value="psylva@apsgambia.gm">P. Hassan</option>
-                                    <option value="biran@apsinternational.com">B. Jobe</option>
-                                    <option value="mlbarrow@gpay.gm">ML. Barrow</option>
-                                </select>
-
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label for="status">Resolved By</label>
-                                <select name="ticket_resolved_by" id="ticket_resolved_by" class="form-control form-sm mt-1 mb-1">
-                                    <option value="<?= $ticket['ticket_resolved_by']?>"><?= $ticket['ticket_resolved_by']?></option>
-                                    <option value="ML. Marong">ML. Marong</option>
-                                    <option value="F. Susso">F. Susso</option>
-                                    <option value="P. Hassan">P. Hassan</option>
-                                    <option value="B. Jobe">B. Jobe</option>
-                                    <option value="ML. Barrow">ML. Barrow</option>
-                                    <option value="S. Ceesay">S. Ceesay</option>
-
-                                </select>
-
-                            </div>
-
-                            <div class="col-lg-8">
+                            <div class="col-lg-3 col-sm-12">
                                 <label for="category">Category</label>
                                 <select name="category" id="category" class="form-control form-sm mt-1 mb-1">
                                 <option value="<?= $ticket['category']?>"><?= $ticket['category']?></option>
-                                <option value="Domain">Domain</option>
-                                <option value="Networking">Networking</option>
-                                <option value="Computer Hardware">Computer Hardware</option>
-                                <option value="Internet Access">Internet Access</option>
+                                <?php foreach($parent as $category):?>
+                                    <option value="<?=$category['category']?>"><?=$category['category']?></option>
+                                <?php endforeach;?>
 
                                 <?php if(isset($errors['category'])):?>
                                     <div><small style="color:red"><?=$errors['category']?></small></div>
                                 <?php endif;?>
                                 </select>
                             </div>
-
-                            <div class="col-lg-4">
+                            
+                            <div class="col-lg-3 col-sm-12">
                                 <label for="sub_category">Sub Category</label>
                                 <select name="sub_category" id="sub_category" class="form-control form-sm mt-1 mb-1">
                                 <option value="<?= $ticket['sub_category']?>"><?= $ticket['sub_category']?></option>
-                                <option value="Email Issue">Email Issue</option>
-                                <option value="Email Blocked">Email Blocked</option>
-                                <option value="Internet required">Internet required</option>
-                                <option value="Replace network Cable">Replace network Cable</option>
-                                <option value="Hardware Replacement">Hardware Replacement</option>
-                                <option value="New Hardware Request">New Hardware Request</option>
+                                <?php foreach($child as $category):?>
+                                    <option value="<?=$category['category']?>"><?=$category['category']?></option>
+                                <?php endforeach;?>
                                 <option value="OTHERS">OTHERS</option>
                                 
                                 <?php if(isset($errors['sub_category'])):?>
@@ -133,16 +100,13 @@
                                 </select>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-3 col-sm-12">
                                 <label for="department">Department</label>
                                 <select name="department" id="department" class="form-control form-sm mt-1 mb-1">
                                 <option value="<?= $ticket['department']?>"><?= $ticket['department']?></option>
-                                <option value="Operations">Operations</option>
-                                <option value="Compliance">Compliance</option>
-                                <option value="APS Int. Reconciliation Office">APS Int. Reconciliation Office</option>
-                                <option value="Agent Operations">Agent Operations</option>
-                                <option value="Business Development">Business Development</option>
-                                <option value="IT">IT</option>
+                                <?php foreach($dept as $ticketDept):?>
+                                    <option value="<?= $ticketDept['department_name']?>"><?= $ticketDept['department_name']?></option>
+                                <?php endforeach;?>
                                 </select>
 
                                 <?php if(isset($errors['department'])):?>
@@ -152,7 +116,7 @@
 
                             <div class="col-lg-12">
                                 <label for="discription">Discription</label>
-                                <textarea name="discription" id="discription" placeholder="Narration..." class="form-control"><?= $ticket['discription']?></textarea>
+                                <textarea name="discription" id="discription" style="height:260px" placeholder="Narration..." class="form-control"><?= $ticket['discription']?></textarea>
 
                                 <?php if(isset($errors['discription'])):?>
                                     <div><small style="color:red"><?=$errors['discription']?></small></div>

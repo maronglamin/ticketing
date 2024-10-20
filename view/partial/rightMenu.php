@@ -28,13 +28,13 @@
             <span>Ticketing</span>
         </a>
         </li>
-        
+              
         <!-- Divider -->
         <hr class="sidebar-divider">
 
     <!--  // endif;?> -->
-
-    <?php if(http\model\User\Users::hasDepartment('IT')) :?>
+    
+    <?php if(deptPermission('APSW IT')) :?>
         <li class="nav-item">
             <a 
                 class="nav-link collapsed" 
@@ -43,7 +43,7 @@
                 data-target="#collapseITdirectives" 
                 aria-expanded="true" 
                 aria-controls="collapseITdirectives">
-                <span>Request</span>
+                <span>Super Admin</span>
             </a>
 
             <div 
@@ -54,10 +54,35 @@
                 
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Ticketing</h6>
-                    <a class="collapse-item" href="<?= route('admin/ticketing')?>">APSW Ticketing</a>
+                    <hr class="sidebar-divider">
+                    <a class="collapse-item" href="<?= route('mobifin/category/ticket')?>">Ticket  Categories</a>
+                    <a class="collapse-item" href="<?= route('department/list')?>">APS Department</a>
 
-                    <h6 class="collapse-header">Maintenance</h6>
-                    <a class="collapse-item" href="<?= route('mobifin/category/ticket')?>">Request Category</a>
+                </div>
+            </div>
+        </li>
+        
+        <li class="nav-item">
+            <a 
+                class="nav-link collapsed" 
+                href="#" 
+                data-toggle="collapse" 
+                data-target="#collapseITNotification" 
+                aria-expanded="true" 
+                aria-controls="collapseITNotification">
+                <span>Email Notification</span>
+            </a>
+
+            <div 
+                id="collapseITNotification" 
+                class="collapse" 
+                aria-labelledby="headingITNotification" 
+                data-parent="#accordionSidebar">
+                
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Emails</h6>
+                    <a class="collapse-item" href="#">Sent Emails</a>
+                    <a class="collapse-item" href="<?= route('email/queued')?>">Queued Emails</a>
                 </div>
             </div>
         </li>
@@ -92,6 +117,68 @@
             </div>
         </div>
     </li> 
+    <?php endif;?>
+
+
+    <?php if(deptPermission('APSW IT') || deptPermission('APSW Operations')) :?>
+        <li class="nav-item">
+            <a 
+                class="nav-link collapsed" 
+                href="#" 
+                data-toggle="collapse" 
+                data-target="#collapseOperationsCheck" 
+                aria-expanded="true" 
+                aria-controls="collapseOperationsCheck">
+                <span>Operations Check List</span>
+            </a>
+
+            <div 
+                id="collapseOperationsCheck" 
+                class="collapse" 
+                aria-labelledby="headingOperationsCheck" 
+                data-parent="#accordionSidebar">
+                
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Ticket Status</h6>
+                    <a class="collapse-item" href="<?= route('admin/ticketing')?>">All tickets</a>
+                    <hr class="sidebar-divider">
+                    <a class="collapse-item" href="<?= route('operations/checklist/new')?>">New Tickets</a>
+                    <a class="collapse-item" href="<?= route('operations/checklist/onhold')?>">On-hold Tickets</a>
+                    <a class="collapse-item" href="<?= route('operations/checklist/inprogress')?>">In-progress Tickets</a>
+                    <a class="collapse-item" href="<?= route('operations/checklist/cancelled')?>">Cancelled Tickets</a>
+                    <a class="collapse-item" href="<?= route('operations/checklist/resolved')?>">Resolved Tickets</a>
+                    <a class="collapse-item" href="<?= route('operations/checklist/closed')?>">Closed Tickets</a>
+                </div>
+            </div>
+        </li>
+
+    <?php endif;?>
+
+    <?php if(deptPermission('APSW IT') || deptPermission('APSW Call Center')) :?>
+        <li class="nav-item">
+            <a 
+                class="nav-link collapsed" 
+                href="#" 
+                data-toggle="collapse" 
+                data-target="#collapseCallCheck" 
+                aria-expanded="true" 
+                aria-controls="collapseCallCheck">
+                <span>Update Request</span>
+            </a>
+
+            <div 
+                id="collapseCallCheck" 
+                class="collapse" 
+                aria-labelledby="headingCallCheck" 
+                data-parent="#accordionSidebar">
+                
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Ticket Status</h6>
+                    <a class="collapse-item" href="<?= route('admin/ticketing')?>">All tickets</a>
+                </div>
+            </div>
+        </li>
+
     <?php endif;?>
 
 

@@ -104,7 +104,7 @@ function root()
 
 function cur_time()
 {
-    return date("Y-m-d H:i:s", strtotime('-2 hours'));
+    return date("Y-m-d H:i:s");
 }
 
 function previousCur_time()
@@ -124,7 +124,7 @@ function previousDate()
 
 function readDate($data)
 {
-    return date("D M Y", strtotime($data));
+    return date("D, d M Y", strtotime($data));
 }
 
 function readTime($data)
@@ -169,4 +169,11 @@ function text2cap($text)
 function clientHost()
 {
     return gethostbyaddr($_SERVER['REMOTE_ADDR']);
+}
+
+function deptPermission($deptName) {
+    return http\model\User\Users::hasDepartment($deptName);
+}
+function department() {
+    return core\Session::department();
 }
