@@ -78,23 +78,34 @@
                     <p class="text-secondary text-center">Showing <?= $page ?> of <?= $pages ?>. Total Records <?= $records ?></p>
                         <nav aria-label="Page navigation example p-2">
                             <ul class="pagination justify-content-end">
-                                <li class="page-item">
-                                    <?php if ($page >= 2) : ?>
-                                        <a class="page-link" href="<?=route('admin/ticketing?page='.($page - 1)) ?>" tabindex="-1">Previous</a>
-                                    <?php endif; ?>
+                                <!-- Previous Button -->
+                                <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= $page > 1 ? route('admin/ticketing?page=' . ($page - 1)) : '#' ?>" tabindex="-1">Previous</a>
                                 </li>
-                                <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                        <li class="page-item"><a class="page-link" href="<?=route('admin/ticketing?page='. $i )?>"><?= $i ?></a></li>
+
+                                <?php
+                                $maxVisiblePages = 5; // Maximum number of visible pages
+                                $startPage = max(1, $page - 2); // Start 2 pages before the current page
+                                $endPage = min($pages, $startPage + $maxVisiblePages - 1); // Ensure no overflow
+
+                                // Adjust startPage if close to the last page
+                                if ($endPage - $startPage + 1 < $maxVisiblePages) {
+                                    $startPage = max(1, $endPage - $maxVisiblePages + 1);
+                                }
+
+                                // Generate visible page links
+                                for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                                    <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                        <a class="page-link" href="<?= route('admin/ticketing?page=' . $i) ?>"><?= $i ?></a>
+                                    </li>
                                 <?php endfor; ?>
 
-                                <li class="page-item">
-                                    <?php if ($page < $pages) : ?>
-                                        <a class="page-link" href="<?=route('admin/ticketing?page='.($page + 1)) ?>">Next</a>
-                                    <?php endif; ?>
+                                <!-- Next Button -->
+                                <li class="page-item <?= $page >= $pages ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= $page < $pages ? route('admin/ticketing?page=' . ($page + 1)) : '#' ?>">Next</a>
                                 </li>
                             </ul>
                         </nav>
-
                 </div>
                 
             </div>

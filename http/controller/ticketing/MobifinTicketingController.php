@@ -37,10 +37,10 @@ class MobifinTicketingController extends Controller
     public function category()
     {
         return view('ticketing/mobifin/categories.mobifin.view', [
-            'title' => 'MPR category',
+            'title' => 'Category',
             'errors' => Session::get('errors'),
-            'heading' => 'MPR Categories',
-            'instruction' => 'Add categories and sub-categories for new ticket request that relates to mobifin platform.',
+            'bannerHeader' => 'Ticket Categories',
+            'tagline' => "Organize the tickets by categories and sub-categories",
             'page' => Paginator::page(),
             'start' => Paginator::start(),
             'records' => Paginator::paginate('mpr_catergories'),
@@ -106,29 +106,32 @@ class MobifinTicketingController extends Controller
     public function storeTicket()
     {
         $instance = Validation::validate($data = [
+            'category' => sanitize($_POST['category']),
+            'sub_category' => sanitize($_POST['sub_category']),
             'summary' => sanitize($_POST['summary']),
             'department' => sanitize($_POST['department']),
-            'discription' => sanitize($_POST['discription']),
+            'description' => sanitize($_POST['description']),
             'ticketId' => sanitize($_POST['ticketId']),
             'make_at' => cur_time(),
             'maker_id' => Session::user(),
             'host' => ($_POST['host']),
             'priority' => ($_POST['priority']),
             'email' => ($_POST['email']),
-            'ticket_channel' => ($_POST['ticket_channel']),
             'user_department' => Session::department()
         ],
         [
+            'sub_category' => 'required',
+            'category' => 'required',
             'summary' => 'required',
             'department' => 'required',
-            'discription' => 'required',
+            'description' => 'required',
             'priority' => 'required'
         ]);
 
         $email_detail = [
             'ticket_id' => sanitize($_POST['ticketId']),
             'subject' => sanitize($_POST['ticketId']). ' '. sanitize($_POST['summary']),
-            'mail_body' => sanitize($_POST['discription']),
+            'mail_body' => sanitize($_POST['description']),
             'recipient' => ($_POST['email']),
             'copied_user' => Response::DEFUALT_COPIED_USER,
             'created_at' => cur_time(),
@@ -136,12 +139,12 @@ class MobifinTicketingController extends Controller
             'remark' => 'Ticket raise  by user '.sanitize($_POST['email'])  .' on '.sanitize($_POST['summary']) . ' using  '.sanitize($_POST['host']) .' machine IP address',
         ];
 
-        $data['file_path'] = UploadImg::saveFile($instance);
+       // $data['file_path'] = UploadImg::saveFile($instance);
 
         if (TicketingModel::getTicketId($data['ticketId'])) {
 
             $instance->error(
-                'classification', 'TICKET ID for your request alreday exit, kindly refresh and try again.'
+                'category', 'TICKET ID for your request alreday exit, kindly refresh and try again.'
             )->throw();
         }
         
@@ -151,7 +154,62 @@ class MobifinTicketingController extends Controller
         Authenticator::save('queue_email', $email_detail); 
                 
         Session::flash('success', 'Request sent successfully');
-        return redirect('/aps-request');
+        return redirect('/dashboard');
+        
+
+    }
+    public function storeRaiseTicket()
+    {
+        $instance = Validation::validate($data = [
+            'category' => sanitize($_POST['category']),
+            'sub_category' => sanitize($_POST['sub_category']),
+            'summary' => sanitize($_POST['summary']),
+            'department' => sanitize($_POST['department']),
+            'description' => sanitize($_POST['description']),
+            'ticketId' => sanitize($_POST['ticketId']),
+            'make_at' => cur_time(),
+            'maker_id' => Session::user(),
+            'host' => ($_POST['host']),
+            'priority' => ($_POST['priority']),
+            'email' => ($_POST['email']),
+            'user_department' => Session::department()
+        ],
+        [
+            'sub_category' => 'required',
+            'category' => 'required',
+            'summary' => 'required',
+            'department' => 'required',
+            'description' => 'required',
+            'priority' => 'required'
+        ]);
+
+        $email_detail = [
+            'ticket_id' => sanitize($_POST['ticketId']),
+            'subject' => sanitize($_POST['ticketId']). ' '. sanitize($_POST['summary']),
+            'mail_body' => sanitize($_POST['description']),
+            'recipient' => ($_POST['email']),
+            'copied_user' => Response::DEFUALT_COPIED_USER,
+            'created_at' => cur_time(),
+            'updated_at' => cur_time(),
+            'remark' => 'Ticket raise  by user '.sanitize($_POST['email'])  .' on '.sanitize($_POST['summary']) . ' using  '.sanitize($_POST['host']) .' machine IP address',
+        ];
+
+       // $data['file_path'] = UploadImg::saveFile($instance);
+
+        if (TicketingModel::getTicketId($data['ticketId'])) {
+
+            $instance->error(
+                'category', 'TICKET ID for your request alreday exit, kindly refresh and try again.'
+            )->throw();
+        }
+        
+
+        Authenticator::save('aps_ticketing', $data); 
+
+        Authenticator::save('queue_email', $email_detail); 
+                
+        Session::flash('success', 'Request sent successfully');
+        return redirect('/dashboard');
         
 
     }

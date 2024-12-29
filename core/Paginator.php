@@ -16,7 +16,7 @@ class Paginator {
 
     public static function page()
     {
-        return isset($_GET['page']) ? $_GET['page'] : Response::DEFAULT_PAGE;
+        return max(1, isset($_GET['page']) ? $_GET['page'] : Response::DEFAULT_PAGE);
     }
 
     public static function pages($table)
@@ -31,7 +31,6 @@ class Paginator {
 
     public static function pagination($table, $order = 'id', $optionalCol = '', $optionalField = '')
     {
-        $department = Session::department();
         return Authenticator::get()
                 ->query("SELECT count(*) from $table where soft_deleted = 'NTDEL' ORDER BY $order")
                 ->find();

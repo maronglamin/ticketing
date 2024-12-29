@@ -1,19 +1,84 @@
 <?php 
 
-function dnd($value)
-{
-   echo '<pre>';
+use core\Router;
+use http\model\User\Users;
 
-   var_dump($value);
-    
-   echo '</pre>';
 
-   exit;
+if (!function_exists('dnd')) {
+    function dnd(...$vars) {
+        echo '<style>
+                body {
+                    background-color: #212529; /* Dark background for the body */
+                    color: #ffffff; /* Default text color */
+                }
+                .dnd-output { 
+                    background-color: #212529; /* Darker background for output */
+                    border: 1px solid #495057; 
+                    padding: 10px; 
+                    border-radius: 5px; 
+                    overflow-x: auto; 
+                }
+                .dnd-output pre {
+                    margin: 0;
+                    font-family: monospace;
+                }
+                .key { 
+                    color: #ffffff; /* White for keys */
+                }
+                .value { 
+                    color: #28a745; /* Hot orange for values */
+                }
+                .bracket { 
+                    color: #dc3545; /* Red for brackets */
+                }
+              </style>';
+        
+        echo '<div class="dnd-output">';
+        foreach ($vars as $var) {
+            echo '<pre>';
+            highlight_var_dump($var);
+            echo '</pre>';
+        }
+        echo '</div>';
+        die();
+    }
+
+    function highlight_var_dump($var) {
+        ob_start(); // Start output buffering
+        var_dump($var);
+        $output = ob_get_clean(); // Get the output and clean buffer
+
+        // Replace array keys, values, and brackets with styled HTML
+        $output = preg_replace_callback('/(\[|\{|\}|\])/', function($matches) {
+            return '<span class="bracket">' . $matches[0] . '</span>'; // Directly use $matches[0]
+        }, $output);
+        
+        // Match key-value pairs and apply styles
+        $output = preg_replace_callback('/([\'"]?)(\w+)([\'"]?:)/', function($matches) {
+            return $matches[1] . '<span class="key">' . htmlspecialchars($matches[2]) . '</span>' . $matches[3];
+        }, $output);
+
+        // Match values after '=>' and apply styles, ensuring we don't capture unwanted characters
+        $output = preg_replace_callback('/=>\s*(.*?)(?=\n|$)/', function($matches) {
+            return '=> <span class="value">' . htmlspecialchars(trim($matches[1])) . '</span>';
+        }, $output);
+        
+        // Clean up unwanted characters that might be captured
+        $output = preg_replace('/\s*:\s*/', ': ', $output); // Normalize spacing around colons
+
+        echo $output;
+    }
 }
+
+
 
 function shortText($string, $maxLength, $append)
 {
-    return substr($string, 0, $maxLength) . $append;
+    if (strlen($string) > $maxLength) {
+        return substr($string, 0, $maxLength) . $append;
+    }
+    return substr($string, 0, $maxLength);
+
 }
 
 function sanitize($dirty)
@@ -39,13 +104,29 @@ function view($path, $attributes = [])
     extract($attributes);
 
     require base_path('view/partial/head.php');
-    require base_path('view/partial/rightMenu.php');
-    require base_path('view/partial/topMenu.php');
+    require base_path('view/partial/topNavBar.php');
+    require base_path('view/partial/banner.php');
     
     require base_path('view/' . $path . '.php');
 
-    require base_path('view/partial/footer.php');
+    require base_path('view/partial/externalFooter.php');
 
+}
+
+function userACL()
+{
+    return http\model\ModelData::userACL()['auto_auth'];
+}
+
+function ExternalView($path, $attributes = [])
+{
+    extract($attributes);
+
+    require base_path('view/partial/externalHead.php');
+    
+    require base_path('view/' . $path . '.php');
+
+    require base_path('view/partial/externalFooter.php');
 
 }
 
@@ -107,6 +188,26 @@ function cur_time()
     return date("Y-m-d H:i:s");
 }
 
+function stringTime()
+{
+    return date("Ymdi");
+}
+
+function underlineDate()
+{
+    return date("d_m_Y_His");
+}
+
+function readMonthYear($data)
+{
+    return date("F", strtotime($data)). ' '.date("Y", strtotime($data));
+}
+
+function readMonthDay($data)
+{
+    return date("M d", strtotime($data));
+}
+
 function previousCur_time()
 {
     return date("Y-m-d H:i:s", strtotime('-26 hours'));
@@ -124,7 +225,7 @@ function previousDate()
 
 function readDate($data)
 {
-    return date("D, d M Y", strtotime($data));
+    return date("d M Y", strtotime($data));
 }
 
 function readTime($data)
@@ -158,7 +259,8 @@ function flash($key)
 
 function intended()
 {
-    return core\Router->previousUrl();
+    $router = new Router();
+    return $router->previousUrl();
 }
 
 function text2cap($text) 
@@ -176,4 +278,52 @@ function deptPermission($deptName) {
 }
 function department() {
     return core\Session::department();
+}
+
+function isSuperAdmin()
+{
+    return Users::superAdmin();
+}
+
+function isIntAdmin()
+{
+    return Users::intAdmin();
+}
+function isIMFAdmin()
+{
+    return Users::IMFAdmin();
+}
+function iswalletAdmin()
+{
+    return Users::walletAdmin();
+}
+
+function isBankPlay()
+{
+    return core\Session::isBankPlay();
+}
+
+function isReviewer()
+{
+    return core\Session::isReviewer();
+}
+
+function isApprover()
+{
+    return core\Session::isApprover();
+}
+
+function isInputter()
+{
+    return core\Session::isInputter();
+}
+
+function isAccountSignatory()
+{
+    return core\Session::isAccountSignatory();
+}
+
+function isOtherBankUser()
+{
+    return core\Session::isOtherBankUser();
 }

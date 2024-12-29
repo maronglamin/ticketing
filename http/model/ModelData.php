@@ -5,6 +5,7 @@ namespace http\model;
 use core\Session;
 use core\Response;
 use core\Authenticator;
+use FontLib\Table\Type\name;
 
 class ModelData 
 {
@@ -37,6 +38,13 @@ class ModelData
                 ->get();
     }
 
+    public static function getLastInsertedID($table)
+    {
+        return Authenticator::get()
+                ->query("SELECT max(id) as ticket_id FROM {$table}")
+                ->find();
+    }
+
     public static function userEmail()
     {
         $user = Session::user();
@@ -50,6 +58,18 @@ class ModelData
         $email = static::userEmail();
         return $email['email'];
     }
+
+    public static function userACL()
+    {
+        return Authenticator::get()
+        ->query("SELECT `name`, auto_auth, username FROM users WHERE soft_deleted = :soft_deleted AND username = :username", [
+            'soft_deleted' => 'NTDEL',
+            'username' => Session::user()
+
+        ])->find();
+    }
+
+
 
 
 }

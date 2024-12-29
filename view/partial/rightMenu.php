@@ -163,7 +163,7 @@
                 data-target="#collapseCallCheck" 
                 aria-expanded="true" 
                 aria-controls="collapseCallCheck">
-                <span>Update Request</span>
+                <span>Customer Service</span>
             </a>
 
             <div 
@@ -175,6 +175,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Ticket Status</h6>
                     <a class="collapse-item" href="<?= route('admin/ticketing')?>">All tickets</a>
+                    <a class="collapse-item" href="<?= route('callcenter/logs')?>">Customer logs</a>
                 </div>
             </div>
         </li>

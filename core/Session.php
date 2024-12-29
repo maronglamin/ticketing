@@ -40,7 +40,6 @@ class Session
     {
         $_SESSION['user'] = [
             'username' => $user['username'],
-            'name' => $user['name'],
         ];
 
         session_regenerate_id(true);
@@ -57,10 +56,16 @@ class Session
 
     }
 
+
     public static function auth($key)
     {
         return authorize(($_SESSION['user']['username']) === $key ?? false);
     }
+
+    // public static function entity()
+    // {
+    //     return empty($_SESSION) ? authorize(false) : Users::currentUser()['aps_entity'];
+    // }
 
     public static function user()
     {
@@ -80,5 +85,40 @@ class Session
     public static function visible()
     {
         return !empty($_SESSION['user']['username']) ?? false;
+    }
+
+    public static function isBankPlay()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['aps_bankPayer'] === Response::IMF_BANK_USER;
+    }
+
+    public static function isOtherBankUser()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['aps_bankPayer'] === Response::BANK_USER;
+    }
+
+    public static function isAccountSignatory()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['aps_bankPayer'] === Response::ACCOUNT_SIGNATORY;
+    }
+
+    public static function entity()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['aps_entity'];
+    }
+
+    public static function isReviewer()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['auto_auth'] === Response::REV;
+    }
+
+    public static function isApprover()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['auto_auth'] === Response::AUTH;
+    }
+
+    public static function isInputter()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['auto_auth'] === Response::INPUTTER;
     }
 }

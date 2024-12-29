@@ -24,6 +24,13 @@ class TicketingModel
                 ->find();
     }
 
+    public static function getRefId($ref)
+    {
+        return Authenticator::get()
+                ->query("SELECT * FROM apsw_transaction_funding WHERE transaction_id = '{$ref}'")
+                ->find();
+    }
+
     public static function getAllTicket($ticket_id)
     {
         return Authenticator::get()

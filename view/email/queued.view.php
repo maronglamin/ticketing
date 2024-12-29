@@ -1,9 +1,6 @@
-<div class="container-fluid">
-    <h2 
-        class="h3 mb-1 text-gray-800 text-uppercase">
-        <?=$heading?>
-    </h2>
-    <p class="mb-4"><?=$message?></p>
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
 
     <div class="row">
         <div class="col-lg-12">
@@ -54,4 +51,5 @@
         </div>
     </div>
 
+</div>
 </div>

@@ -33,10 +33,45 @@ class Users
         return false;
     }
 
+    public static function superAdmin()
+    {
+        $user = static::currentUser();
+        if ($user["user_role"] === 'Administrator') {
+            return true;
+        }
+        return false;
+    }
+
+    public static function intAdmin()
+    {
+        $user = static::currentUser();
+        if ($user["user_role"] === 'APS International Admin') {
+            return true;
+        }
+        return false;
+    }
+
+    public static function IMFAdmin()
+    {
+        $user = static::currentUser();
+        if ($user["user_role"] === 'APS IMF Admin') {
+            return true;
+        }
+        return false;
+    }
+    public static function walletAdmin()
+    {
+        $user = static::currentUser();
+        if ($user["user_role"] === 'APS Wallet Admin') {
+            return true;
+        }
+        return false;
+    }
+
     public static function hasDepartment($department)
     {
         $user = static::currentUser();
-        if ($user["department"] ===  $department || $user["department"] === 'IT') {
+        if ($user["department"] ===  $department || $user["user_role"] === 'Administrator') {
             return true;
         }
         return false;

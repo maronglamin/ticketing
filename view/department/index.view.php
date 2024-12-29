@@ -1,10 +1,6 @@
-<div class="container-fluid">
-    <h2 
-        class="h3 mb-1 text-gray-800 text-uppercase">
-        <?=$heading?>
-    </h2>
-    <p class="mb-4"><?=$instruction?></p>
-
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
     <div class="row">
 
         <div class="col-lg-4">
@@ -14,10 +10,11 @@
 
                 <div class="card-body">
                     <?=flash('success')?>
+                    <h3>New Department</h3>
                     <form action="<?= route("department/create/new") ?>" method="post">
                         <div class="row">
 
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-12 mt-1">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="department_name">Department's Name *</label>
@@ -30,7 +27,23 @@
                                 <?php endif;?>
                             </div>
 
-                            <div class="col-lg-12 mb-3">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label class="input-group-text mt-2" for="aps_entity">Company</label>
+                                        <select class="form-control mt-2" name="company" id="company">
+                                            <option value="" >Choose Company</option>
+                                            <?php foreach($entity as $ent):?>
+                                                <option value="<?=$ent['entity_name']?>"><?=$ent['entity_name']?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                </div>
+
+                                    <?php if(isset($errors['company'])):?>
+                                        <div><small style="color:red"><?=$errors['company']?></small></div>
+                                    <?php endif;?>
+                            </div>
+
+                            <div class="col-lg-12 mt-2">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="email">Group Email *</label>
@@ -116,4 +129,5 @@
 
     </div>
 
+</div>
 </div>

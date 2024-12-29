@@ -6,6 +6,7 @@ use core\Session;
 use core\Paginator;
 use core\Authenticator;
 use http\forms\Validation;
+use http\model\EntityModel;
 use http\controller\Controller;
 use http\model\DepartmentModel;
 
@@ -16,13 +17,16 @@ class DepartmentController extends Controller
         return view('department/index.view', [
             'title' => 'APS Departments',
             'errors' => Session::get('errors'),
+            'bannerHeader' => 'Departments',
+            'tagline' => "All Department and their corresponding group email",
             'heading' => 'Aps Department',
-            'instruction' => 'All Department and their corresponding group email',
             'page' => Paginator::page(),
             'start' => Paginator::start(),
             'records' => Paginator::paginate('aps_department'),
             'pages' => Paginator::pages('aps_department'),
-            'dept' => DepartmentModel::getDepartment()
+            'dept' => DepartmentModel::getDepartment(),
+            // 'dept' => DepartmentModel::getDepartmentByEntity(),
+            'entity' => EntityModel::getEntity(),
             
         ]);
     }
@@ -33,12 +37,14 @@ class DepartmentController extends Controller
         $instance = Validation::validate($data = [
             'department_name' => sanitize($_POST['department_name']),
             'email' => sanitize($_POST['email']), 
+            'company' => sanitize($_POST['company']),
             'created_at' => cur_time(),
             'maker_id' => Session::user()
         ],
         [
             'department_name' => 'required',
             'email' => 'required',
+            'company' => 'required'
         ]);
 
         if(DepartmentModel::getEmail($data['email'])) {

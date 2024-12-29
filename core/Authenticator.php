@@ -18,6 +18,11 @@ class Authenticator
                 static::login([
                     'username' => $username,
                 ]);
+
+                Session::put('aps_bankPayer', $user['aps_bankPayer']);
+                Session::put('aps_entity', $user['aps_entity']);
+                Session::put('name', $user['name']);
+                Session::put('auto_auth', $user['auto_auth']);
         
                 return true;
             }
@@ -128,12 +133,12 @@ class Authenticator
 
     public static function login($user)
     {
-        Session::create($user);
+        return Session::create($user);
         
     }
 
     public static function logout() 
     {
-        Session::destroy();
+        return Session::destroy();
     }
 }

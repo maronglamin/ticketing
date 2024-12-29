@@ -38,6 +38,13 @@ class SessionController extends Controller
             )->throw();
         }
 
+        if (isBankPlay() || isOtherBankUser()) {
+            return redirect('/user/bank/note');
+        }
+
+        if (isAccountSignatory()) {
+            return redirect('/signatures/bank/note');
+        }
         return redirect('/dashboard');
     }
 

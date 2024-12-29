@@ -10,6 +10,7 @@ use core\JsonGenerate;
 use core\Authenticator;
 use http\model\ModelData;
 use http\forms\Validation;
+use http\model\DashboardModel;
 use http\model\TicketingModel;
 use http\controller\Controller;
 use http\model\DepartmentModel;
@@ -53,13 +54,22 @@ class TicketingController extends Controller
 
     public function newTicket()
     {
-        return view('ticketing/new.ticket.view', [
+        return view('ticketing/raise.view', [
             'title' => 'New Ticket Request',
             'errors' => Session::get('errors'),
+            'bannerHeader' => 'Raise a New Ticket',
+            'tagline' => 'Make a new ticket request here and monitor the status over time.',
+            'departmentCount' => DashboardModel::getDeptTicketCount(Session::department()),
+            'userCount' => DashboardModel::getUserTicketCount(Session::user(), Response::NOT_SOFT_DELETED),
+            'deptResolved' => DashboardModel::getTicketStatusCount(Session::department(), Response::STATUS_RESOLVED),
+            'deptNew' => DashboardModel::getTicketStatusCount(Session::department(), Response::STATUS_NEW),
             'heading' => 'New IT Request',
             'instruction' => 'Send a new ticket request',
             'ticketing_id' => ModelData::getLastID('aps_ticketing'),
-            'dept' => DepartmentModel::getDepartment()
+            'dept' => DepartmentModel::getDepartment(),
+            'ownDept' => DepartmentModel::getDepartmentByEntity(),
+            'parent' => RequestTypeModel::getParent(),
+            'child' => RequestTypeModel::getChild(),
 
         ]);
     }
@@ -111,9 +121,11 @@ class TicketingController extends Controller
     {
         $ticket_id = sanitize($_GET['ticketing']);
 
-        return view('ticketing/status.ticket.view', [
+        return view('ticketing/details.view', [
             'title' => 'Ticket Status',
             'errors' => Session::get('errors'),
+            'bannerHeader' => 'Ticket Details',
+            'tagline' => 'View and update the details of your ticket',
             'heading' => 'Ticket Status',
             'instruction' => 'View ticket status',
             'ticket_detail' => TicketingModel::getTicket($ticket_id),
@@ -204,8 +216,6 @@ class TicketingController extends Controller
         if ($data['status'] === Response::STATUS_ASSIGED) {
             $data['ticket_assigned_at'] = cur_time();
 
-        } elseif ($data['status'] === Response::STATUS_IN_PROGRESS) {
-            $data['ticket_working_in_at'] = cur_time();
         } elseif ($data['status'] === Response::STATUS_ONHOLD) {
             $data['ticket_on_hold_at'] = cur_time();
 
@@ -214,8 +224,8 @@ class TicketingController extends Controller
 
         } elseif ($data['status'] === Response::STATUS_CLOSED) {
             $data['ticket_closed_at'] = cur_time();
-        } elseif ($data['status'] === Response::STATUS_CANCELLED) {
-            $data['ticket_cancel_at'] = cur_time();
+        } elseif ($data['status'] === Response::STATUS_ESCALATE) {
+            $data['ticket_escalated_at'] = cur_time();
         } else {
             $data['status'];
         }

@@ -19,8 +19,8 @@ class Response {
 
     const LIVE_HOSTNAME = '127.0.0.1';
     const LIVE_PORT = '3306';
-    const LIVE_DB_NAME = 'mobifin_dataset';
-    const LIVE_DB_PASSWORD = 'Apsw321';
+    const LIVE_DB_NAME = 'uat_ticketing';
+    const LIVE_DB_PASSWORD = '';
     const LIVE_DB_USER = 'root';
 
     const DEFAULT_VALIDATION_ERRORS = [
@@ -74,9 +74,26 @@ class Response {
     const STATUS_RESOLVED = 'RESOLVED';
     const STATUS_CLOSED = 'CLOSED';
     const STATUS_NEW = 'NEW';
+    const STATUS_ESCALATE = 'ESCALATE';
     const STATUS_ONHOLD = 'ON HOLD';
     const STATUS_REOPENED = 'REOPENED';
     const STATUS_CANCELLED = 'CANCELLED';
 
     const PARENT_ID = '0';
+
+    const REJECT = 'REJECTED';
+    const REVIEW = 'REVIEWED';
+    const APPROVE = 'APPROVED';
+    const PENDING = 'PENDING';
+
+    const SENT_FOR_SIGNATURE = 'PENDING_SIGNATURE';
+
+    const REV = 'AUTO_REV';
+    const AUTH = 'AUTO_AUTH';
+    const INPUTTER = 'AUTH';
+
+    // bank notes user
+    const IMF_BANK_USER = 'IMF_BANK_PAYER';
+    const BANK_USER = 'OTHER_BANK_USER';
+    const ACCOUNT_SIGNATORY = 'ACCOUNT_SIGNATORY';
 }

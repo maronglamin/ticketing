@@ -11,6 +11,7 @@ use http\forms\Validation;
 use http\model\User\Users;
 use http\controller\Controller;
 use http\model\DepartmentModel;
+use http\model\EntityModel;
 
 class SignedController extends Controller
 {
@@ -19,6 +20,8 @@ class SignedController extends Controller
         return view('session/users.view', [
             'errors' => Session::get('errors'),
             'title' => 'Users',
+            'bannerHeader' => 'User List',
+            'tagline' => 'Manage user accounts',
             'heading' => 'User Summary',
             'instruction' => 'System users',
             'data' => Response::PAGE_RECORD,
@@ -35,7 +38,11 @@ class SignedController extends Controller
         return view('session/user.summary.view', [
             'user' => Users::getUser($_GET['id']),
             'title' => 'Edit user',
-            'dept' => DepartmentModel::getDepartment(),
+            'bannerHeader' => 'Modify User',
+            'tagline' => 'Modify or update user details',
+            'dept' => DepartmentModel::getDepartmentByEntity(),
+            'depts' => DepartmentModel::getDepartment(),
+            'entity' => EntityModel::getEntity(),
             'errors' => Session::get('errors')
         ]);
     }
@@ -82,6 +89,8 @@ class SignedController extends Controller
             'name' => ($_POST['name'] === '')? $user['name']: $_POST['name'],
             'department' => $_POST['department'], 
             'user_role' => $_POST['user_role'], 
+            'aps_entity' => $_POST['entity_name'], 
+            'aps_bankPayer' => $_POST['aps_bankPayer'], 
 
         ], 
 
@@ -117,6 +126,7 @@ class SignedController extends Controller
             'username' => 'required',
             'name' => 'required',
             'password' => 'required',
+            'email' => 'required',
         ]);
 
         # check for username in the database
@@ -137,6 +147,9 @@ class SignedController extends Controller
     {
         return view('session/create.view', [
             'errors' => Session::get('errors'),
+            'title' => 'Dashboard',
+            'bannerHeader' => 'User registeration',
+            'tagline' => 'Create a new user of the system',
         ]);
     }
 

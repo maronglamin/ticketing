@@ -1,7 +1,5 @@
-<div class="container-fluid">
-    <!-- <h2 
-        class="h3 mb-1 text-gray-800 text-uppercase">
-    </h2> -->
+<!-- Main Content -->
+<div class="container mt-4">
 
     <div class="row justify-content-center">
         
@@ -13,12 +11,12 @@
             <div class="row">
                 <div class="form-group ml-2">
                 <input type="submit" value="Save" class="btn btn-sm btn-outline-dark">
-                <a href="<?= route('session/users')?>" class="btn btn-sm btn-outline-dark">Discard</a>
+                <a href="<?= route('session/users')?>" class="btn btn-sm btn-outline-dark">Back</a>
                 </div>
             </div>
         </div>
 
-        <?=flash('success')?>
+        <?=flash('success')?> 
 
 
         <input 
@@ -55,7 +53,7 @@
                                 <?php endif;?>
                             </div>
 
-                            <div class="form-group mt-1">
+                            <div class="form-group mt-4">
                                 <label for="name">Name</label>
                                 <input 
                                     type="text"
@@ -69,13 +67,13 @@
                                     
                             </div>
 
-                            <div class="form-group mt-1">
+                            <div class="form-group mt-4">
                                 <label for="email">Email</label>
                                 <input 
                                     type="text"
                                     class="form-control form-control-sm"
                                     name="email"
-                                    value="<?=($user['email'] !== null)? $user['email'] : ''?>">
+                                    value="<?=($user['email'] !== null)? $user['email'] : old('email')?>">
 
                                     <?php if(isset($errors['email'])):?>
                                         <div><small style="color:red"><?=$errors['email']?></small></div>
@@ -84,28 +82,55 @@
                             
                             <div class="form-group">
                                 <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text" for="auto">Action Auth</label>
-                                        </div>
-                                        <select class="custom-select" name="auto" id="auto">
-                                            <option value="AUTH"></option>
-                                            <option value="AUTO_AUTH">Auto Auth</option>
+                                    <label class="input-group-text mt-4" for="auto">Authorizations</label>
+                                        <select class="form-control mt-4" name="auto" id="auto">
+                                            <option value="AUTH"><?=($user['auto_auth'] !== null)? $user['auto_auth'] : old('auto')?></option>
+                                            <option value="AUTO_AUTH">Authorizer</option>
+                                            <option value="AUTO_REV">Reviewer</option>
+                                            <option value="AUTH">input User</option>
                                         </select>
 
                                 </div>
-                                <small>inputs to be confirmed or not</small>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label class="input-group-text mt-4" for="auto">Bank Officer</label>
+                                        <select class="form-control mt-4" name="aps_bankPayer" id="aps_bankPayer">
+                                            <option value=""></option>
+                                            <option value="IMF_BANK_PAYER">IMF PAYER</option>
+                                            <option value="OTHER_BANK_USER">OTHER BANK PAYER</option>
+                                            <option value="ACCOUNT_SIGNATORY">ACCOUNT SIGNATORY</option>
+                                        </select>
+
+                                </div>
                             </div>
                             
                             <div class="form-group">
                                 <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text" for="department">Department</label>
-                                        </div>
-                                        <select class="custom-select" name="department" id="department">
-                                            <option value="" ><?=($user['department'] !== null)? $user['department'] : ''?></option>
+                                    <label class="input-group-text mt-4" for="entity_name">Company</label>
+                                        <select class="form-control mt-4" name="entity_name" id="entity_name">
+                                        <option selected disabled value="<?=old('entity_name')?>" ><?=($user['aps_entity'] !== null)? $user['aps_entity'] : old('entity_name')?></option>
+                                            <?php foreach($entity as $ent):?>
+                                                <option value="<?=$ent['entity_name']?>"><?=$ent['entity_name']?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                </div>
+
+                                    <?php if(isset($errors['entity_name'])):?>
+                                        <div><small style="color:red"><?=$errors['entity_name']?></small></div>
+                                    <?php endif;?>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label class="input-group-text mt-4" for="department">Department</label>
+                                        <select class="form-control mt-4" name="department" id="department">
+                                            <option value="<?=old('department')?>" ><?=($user['department'] !== null)? $user['department'] : old('department')?></option>
                                             <?php foreach($dept as $deptmnt):?>
                                                 <option value="<?=$deptmnt['department_name']?>"><?=$deptmnt['department_name']?></option>
                                             <?php endforeach;?>
+                                            <option value="Others">Others</option>
                                         </select>
                                 </div>
 
@@ -116,15 +141,18 @@
 
                             <div class="form-group">
                                 <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text" for="user_role">User Roles</label>
-                                        </div>
-                                        <select class="custom-select" name="user_role" id="user_role">
-                                            <option value=""><?=(!empty($user['user_role']))? $user['user_role'] : ''?></option>
-                                            <option value="Manager">APS Manager</option>
-                                            <option value="Supervisor">APS Supervisor</option>
-                                            <option value="Administrator">APS Administrator</option>
-                                            <option value="Officer">APS Officer</option>
+                                    <label class="input-group-text mt-4" for="user_role">User Roles</label>
+                                        <select class="form-control mt-4" name="user_role" id="user_role">
+                                            <option value="<?=old('user_role')?>"><?=(!empty($user['user_role']))? $user['user_role'] : old('user_role')?></option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Supervisor">Supervisor</option>
+                                            <option value="Officer">Officer</option>
+                                            <?php if (isSuperAdmin()):?>
+                                                <option value="Administrator">Super Admin</option>
+                                                <option value="APS International Admin">APS International Admin</option>
+                                                <option value="APS IMF Admin">APS IMF Admin</option>
+                                                <option value="APS IMF Admin">APS Wallet Admin</option>
+                                            <?php endif;?>
                                         </select>
 
                                 </div>
@@ -173,31 +201,29 @@
                             <div class="form-group">
 
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="status">User Status</label>
-                                    </div>
-                                    <select class="custom-select" name="status" id="status">
-                                    <option value="">User status</option>
-                                    <option value="1">Enabled</option>
-                                    <option value="2">Hold</option>
-                                    <option value="3">Disabled</option>
-                                    <option value="4">Locked</option>
+                                    <label class="input-group-text mt-4" for="status">User Status</label>
+                                    <select class="form-control mt-4" name="status" id="status">
+                                        <option value="">User status</option>
+                                        <option value="1">Enabled</option>
+                                        <option value="2">Hold</option>
+                                        <option value="3">Disabled</option>
+                                        <option value="4">Locked</option>
                                     </select>
 
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mt-4">
                                 <label for="">Status changed on</label>
                                 <input type="text" class="form-control form-control-sm" disabled value="<?= human($user['user_status_change'])?>">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mt-4">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" placeholder="Default password" class="form-control">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mt-4">
                                 <label for="changed">Password Changed on</label>
                                 <input type="text" disabled class="form-control" value="<?=(empty($user['password_updated_at']))? 'Never' : human($user['password_updated_at'])?>">
                             </div> 
@@ -209,10 +235,10 @@
             
         </div>
         </form>
-        <div class="card-footer">
-            <div class="row">
-            <?php if($user['confirmed'] === core\Response::UNAUTHORISD):?>
-                <div class="form-group ml-2 justify-content-start">
+        <?php if($user['confirmed'] === core\Response::UNAUTHORISD):?>
+            <hr>
+
+                <div class="form-group p-2 mb-2">
                     <form 
                         action="<?= route('session/users/update')?>"
                         method="post">
@@ -233,24 +259,10 @@
                     </form>
                 </div>
             <?php endif;?>
-            
-                <div class="form-group p-2">
-                    <a href="<?= route('session/user/role?id=' .$_GET['id']. '&username='. $user['username'])?>">Roles | </a>
-                </div>
 
-                <div class="form-group p-2">
-                    <a href=""> Functions |</a>
-                </div>
-                <div class="form-group p-2">
-                    <a href=""> Rights |</a>
-                </div>
-                <div class="form-group p-2">
-                    <a href=""> Disallowed Functions |</a>
-                </div>
-                <div class="form-group p-2">
-                    <a href=""> Dashboard Mapping |</a>
-                </div>
-            </div>
+        <div class="card-footer">
+            <div class="row">
+            
 
             <div class="row">
                 <div class="col-sm-6">
@@ -270,4 +282,5 @@
 
         </div>
     </div>
+</div>
 </div>

@@ -1,7 +1,6 @@
-<div class="container-fluid">
-    <h2 
-        class="h3 mb-1 text-gray-800 text-uppercase">
-    </h2>
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
 
     <div class="row justify-content-center">
         
@@ -20,6 +19,7 @@
             <div class="row">
                 <div class="form-group ml-2">
                 <input type="submit" class="btn btn-sm btn-outline-dark">
+                <a href="<?= route('session/users')?>" class="btn btn-sm btn-outline-dark">User List</a>
                 </div>
             </div>
 
@@ -58,18 +58,23 @@
                                 </div>
 
                             <div class="form-group mt-1">
-                                <label for="">Email</label>
+                                <label for="email">Email / Group Email</label>
                                 <input 
                                     type="text"
                                     class="form-control form-control-sm"
                                     value="<?= old('email')?>"
                                     name="email">
+
+                                    <?php if(isset($errors['email'])):?>
+                                        <div><small style="color:red"><?=$errors['email']?></small></div>
+                                    <?php endif;?>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group mt-1">
+                            <label for="">Auto Auth</label>
                                 <select class="form-control" name="auto" id="auto">
                                     <option value="AUTH"></option>
-                                    <option value="AUTO">Auto Auth</option>
+                                    <option value="AUTO">Auto Authorize</option>
                                 </select>
                                 <small>inputs to be confirmed or not</small>
                             </div>
@@ -152,24 +157,7 @@
         </div>
         </form>
         <div class="card-footer">
-            <div class="row">
-                <div class="form-group p-2">
-                    <a href="">Roles | </a>
-                </div>
-
-                <div class="form-group p-2">
-                    <a href=""> Functions |</a>
-                </div>
-                <div class="form-group p-2">
-                    <a href=""> Rights |</a>
-                </div>
-                <div class="form-group p-2">
-                    <a href=""> Disallowed Functions |</a>
-                </div>
-                <div class="form-group p-2">
-                    <a href=""> Dashboard Mapping |</a>
-                </div>
-            </div>
+           
 
             <div class="row">
                 <div class="col-sm-6">
@@ -190,3 +178,4 @@
         </div>
     </div>
 </div>
+    </div>
