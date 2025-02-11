@@ -103,6 +103,7 @@ class BankNoteController extends Controller
             'transaction_reason' => sanitize($_POST['transaction_reason']),
             'debit_instruction' => sanitize($_POST['debit_instruction']),
             'Agent_bank_nane' => sanitize($_POST['Agent_bank_nane']),
+            'agent_bank_acc_name' => sanitize($_POST['agent_bank_acc_name']),
             'agent_bank_acc_num' => sanitize($_POST['agent_bank_acc_num']),
             'agent_paid_bank_name' => sanitize($_POST['agent_paid_bank_name']),
             'agent_paid_bank_acc_num' => sanitize($_POST['agent_paid_bank_acc_num']),
@@ -120,6 +121,7 @@ class BankNoteController extends Controller
             'agent_paid_bank_acc_num' => 'required',
             'agent_paid_bank_name' => 'required',
             'debit_instruction' => 'required',
+            'agent_bank_acc_name' => 'required',
         ]);
 
         // $data['upload_file'] = UploadImg::saveFile($instance);

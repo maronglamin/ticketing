@@ -203,6 +203,11 @@ function slashDate()
     return date("d/m/Y");
 }
 
+function regularDate($data)
+{
+    return date("d/m/Y", strtotime($data));
+}
+
 function readMonthYear($data)
 {
     return date("F", strtotime($data)). ' '.date("Y", strtotime($data));

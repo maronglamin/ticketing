@@ -95,6 +95,15 @@
                                     </div>  
 
                                     <div class="mb-3">
+                                        <label for="agent_bank_acc_name" class="form-label">Agent Bank Account Name</label>
+                                        <input type="text" class="form-control <?php if(isset($errors['agent_bank_acc_name'])):?> is-invalid <?php endif;?>" min="0" name="agent_bank_acc_name" id="agent_bank_acc_name" placeholder="Account Name as it in the bank statement">
+
+                                        <?php if(isset($errors['agent_bank_acc_name'])):?>
+                                            <div id="bank_name" class="invalid-feedback"><?= $errors['agent_bank_acc_name'] ?></div>
+                                        <?php endif;?>
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="agent_bank_acc_num" class="form-label">Agent Bank Account Number</label>
                                         <input type="text" class="form-control <?php if(isset($errors['agent_bank_acc_num'])):?> is-invalid <?php endif;?>" min="0" name="agent_bank_acc_num" id="agent_bank_acc_num">
 

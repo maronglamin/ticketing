@@ -53,7 +53,7 @@
                         <td><a style="text-decoration: none;" href="<?= route('status/details?ticket='. $value['ticketId']) ?>"><strong><?= $value['ticketId'] ?></strong></a></td>
                         <td><span class="badge bg-secondary"><?= $value['department'] ?></span> <?= shortText($value['summary'], '90', '...')?></td>
                         <td><?= ($value['priority'] === 'High')? '<span class="badge bg-danger bi bi-arrow-up">'. ' '. $value['priority'] .' </span>' : '<span class="badge bg-info bi bi-arrow-down text-dark">'. ' '. $value['priority'] .' </span>'?></td>
-                        <td><?= slashDate($value['make_at']) ?></td>
+                        <td><?= regularDate($value['make_at']) ?></td>
                         <td><strong><?= $value['status'] ?></strong></td>
                     </tr>
                     <?php endforeach; ?>

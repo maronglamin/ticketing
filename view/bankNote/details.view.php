@@ -103,6 +103,11 @@
                     </div>
 
                     <div class="details-row d-flex align-items-center">
+                        <div class="details-key">Agent Account Name:</div>
+                        <div class="details-value"><?= $transaction['agent_bank_acc_name'] ?></div>
+                    </div>
+
+                    <div class="details-row d-flex align-items-center">
                         <div class="details-key">Agent Account Number:</div>
                         <div class="details-value"><?= $transaction['agent_bank_acc_num'] ?></div>
                     </div>

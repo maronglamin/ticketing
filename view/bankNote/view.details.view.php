@@ -322,6 +322,11 @@
                         <div class="details-key">Agent's Bank Name:</div>
                         <div class="details-value"><?= $transaction['Agent_bank_nane'] ?></div>
                     </div>
+                    
+                    <div class="details-row d-flex align-items-center">
+                        <div class="details-key">Agent Account Name:</div>
+                        <div class="details-value"><?= $transaction['agent_bank_acc_name'] ?></div>
+                    </div>
 
                     <div class="details-row d-flex align-items-center">
                         <div class="details-key">Agent Account Number:</div>

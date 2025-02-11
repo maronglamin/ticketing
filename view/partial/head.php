@@ -8,11 +8,11 @@
     <meta name="author" content="">
 
     <title><?= $title . ' | '. (core\Response::COMPANY_NAME)?></title>
-    <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="<?= root()?>/public/img/favicon.ico" />
 
-    <link href="/public/css/newBootstrap.css" rel="stylesheet">
-    <link href="/public/css/main.css" rel="stylesheet" type="text/css">
-    <script src="/public/js/bootstCDN.js"></script>
+    <link href="<?= root()?>/public/css/newBootstrap.css" rel="stylesheet">
+    <link href="<?= root()?>/public/css/main.css" rel="stylesheet" type="text/css">
+    <script src="<?= root()?>/public/js/bootstCDN.js"></script>
 
 </head>
 <style>
