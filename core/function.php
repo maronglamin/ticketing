@@ -355,3 +355,14 @@ function format_number($number, $decimals = 2)
     
     return number_format($number, $decimals, '.', ',');
 }
+
+
+function currntUrl($uri, $trueString, $falseString)
+{
+    return ($_SERVER['REQUEST_URI'] === $uri) ? $trueString : $falseString;
+}
+
+function fullname()
+{
+    return $_SESSION['name'];
+}

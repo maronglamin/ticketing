@@ -1,0 +1,27 @@
+<!-- Recent Sales -->
+<div class="bg-gray-100 rounded-lg p-6 border border-gray-300">
+ <h3 class="text-lg font-semibold text-black mb-2">Recent Sales</h3>
+ <p class="text-sm text-gray-500 mb-6">You made 265 sales this month.</p>
+ <div class="space-y-5">
+ <div class="flex items-center justify-between">
+ <div class="flex items-center gap-3">
+ <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+ <div>
+ <div class="text-sm font-medium text-black">Olivia Martin</div>
+ <div class="text-xs text-gray-500">olivia.martin@email.com</div>
+ </div>
+ </div>
+ <div class="text-sm font-medium text-black">+$1,999.00</div>
+ </div>
+ <div class="flex items-center justify-between">
+ <div class="flex items-center gap-3">
+ <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+ <div>
+ <div class="text-sm font-medium text-black">Jackson Lee</div>
+ <div class="text-xs text-gray-500">jackson.lee@email.com</div>
+ </div>
+ </div>
+ <div class="text-sm font-medium text-black">+$39.00</div>
+ </div>
+ </div>
+</div>

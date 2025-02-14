@@ -13,6 +13,12 @@
                 </li>
                 <?php endif;?>
 
+                 <?php if(deptPermission('APSW Operations') || (deptPermission('APSW IT') || deptPermission('APSW Finance') )):?>
+                <li class="nav-item">
+                    <a class="nav-link active" href="<?= route('dashboard/reports')?>">Reports</a>
+                </li>
+                <?php endif;?>
+
                 <!-- Operations -->
                 <?php if(deptPermission('APSW Operations') || (deptPermission('APSW IT'))) :?>
                 <li class="nav-item  dropdown">

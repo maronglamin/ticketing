@@ -13,6 +13,7 @@ use http\controller\Auth\session\SessionController;
 use http\controller\ticketing\CheckStatusController;
 use http\controller\Auth\session\UserSessionController;
 use http\controller\BankInstruction\BankListController;
+use http\controller\BIDashboards\BiDashboardController;
 use http\controller\Emails\EmailNotificationController;
 use http\controller\Auth\registration\RegisterController;
 use http\controller\callcenter\CustomerServiceController;
@@ -147,4 +148,8 @@ $router->post('/settlement/bank/save', [BankListController::class, 'store'])->on
 $router->delete('/settlement/bank/delete', [BankListController::class, 'delete'])->only('auth');
 
 $router->get('/user/bank/note', [BankCloseController::class, 'index'])->only('auth');
+
+// report routes
+$router->get('/dashboard/reports', [BiDashboardController::class, 'index'])->only('auth');
+
 

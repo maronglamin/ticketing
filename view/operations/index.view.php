@@ -4,6 +4,7 @@
             <div class="col-md-3">
                 <div class="summary-card">
                     <h5>Balance</h5>
+                    <p><a href="<?= route('dashboard/reports')?>">Reports</a></p>
                     <ul class="list-group list-group-flush">
                         <?php foreach($monthBalance as $balance): ?>
                             <li class="list-group-item fw-bold">

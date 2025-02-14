@@ -8,6 +8,7 @@ ob_start();
 
 const BASE_PATH = __DIR__ . DIRECTORY_SEPARATOR;
 require BASE_PATH .'core/function.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 session_start();
 
