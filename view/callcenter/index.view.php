@@ -1,25 +1,5 @@
- <!-- Navbar -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Call Center Ticketing</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="<?= route('dashboard')?>">APS eTicketing</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#new-ticket">New Ticket</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#ticket-history">Ticket History</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Full-Width Card with Image from Directory -->
-  <div class="full-width-card"></div>
-
   <!-- Two Columns Layout -->
-  <div class="container mt-4">
+  <div class="p-3 mt-4">
     <div class="row">
       <!-- Left Column (25%) -->
       <div class="col-md-3">
@@ -39,7 +19,7 @@
           <form action="<?= route("callcenter/save/customerDetail") ?>" method="post">
 
               <!-- hidden inputs for the agent inputs -->
-            <input type="hidden" name="ticketId" value="<?= "APS_CS-" . ($ticketing_id["ticket_id"] + 1) ?>">
+            <input type="hidden" name="ticketId" value="<?= "APS-" . ($ticketing_id["ticket_id"] + 1) ?>">
             <input type="hidden" name="email" value="<?= http\model\ModelData::addUserEmail() ?>">
             <input type="hidden" name="ticket_channel" value="APS_CALL_CENTER">
 
@@ -103,30 +83,24 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Phone Number</th>
+                <th>CCR ID</th>
+                <th>Phone No.</th>
                 <th>Call Reason</th>
-                <th>Transaction Type</th>
-                <th>Username</th>
+                <th>TXN Type</th>
                 <th>Date</th>
-                <th>Status</th>
+                <th>Summary</th>
               </tr>
             </thead>
             <tbody>
             <?php foreach($ticketLists as $ticketList): ?>        
               <tr>
-                <td><a href=""><strong> <?= $ticketList['ticketId']?> </strong></a></td>
+                <td><a href="view/detail?change=<?= $ticketList['ticketId']?>"><strong> <?= $ticketList['ticketId']?> </strong></a></td>
+                <td><?= $ticketList['maker_id']?></td>
                 <td><?= $ticketList['phoneNumber']?></td>
                 <td><?= $ticketList['reasonForCall']?></td>
                 <td><?= $ticketList['transactionType']?></td>
-                <td><?= $ticketList['maker_id']?></td>
                 <td><?= $ticketList['created_at']?></td>
-                <?php if ($ticketList['status'] === 'NEW'):?>
-                    <td><span class="badge bg-secondary text-light"><?= $ticketList['status']?></span></td>
-                <?php elseif($ticketList['status'] === 'PENDING'):?>
-                    <td><span class="badge bg-warning text-dark"><?= $ticketList['status']?></span></td>
-                <?php else:?>
-                    <td><span class="badge bg-success"><?= $ticketList['status']?></span></td>
-                <?php endif;?>
+                <td><?= $ticketList['description']?></td>
               </tr>
             <?php endforeach; ?>
             </tbody>

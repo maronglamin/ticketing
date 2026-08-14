@@ -1,0 +1,161 @@
+<?php include base_path('view/biReports/component/pagesNav.php')?>
+
+
+<div class="flex flex-col md:flex-row bg-white rounded-lg p-6 border border-gray-300 shadow-md">
+    <!-- Sidebar (25%) -->
+    <!-- <div class="w-full md:w-1/4 bg-gray-100 p-4 rounded-lg">
+        <h3 class="text-lg font-semibold text-black mb-4">Report Types</h3>
+        <ul class="space-y-2">
+            <li class="cursor-pointer p-2 bg-blue-50 text-blue-600 rounded-md" onclick="loadReport('sales')">Create Money</li>
+            <li class="cursor-pointer p-2 hover:bg-blue-50 hover:text-blue-600 rounded-md" onclick="loadReport('customers')">Add Money</li>
+            <li class="cursor-pointer p-2 hover:bg-blue-50 hover:text-blue-600 rounded-md" onclick="loadReport('transactions')">Kill Money</li>
+            <li class="cursor-pointer p-2 hover:bg-blue-50 hover:text-blue-600 rounded-md" onclick="loadReport('transactions')">Agent Settlement Instruction</li>
+        </ul>
+    </div> -->
+
+    <div class="w-full md:ml-6 mt-4 md:mt-0">
+        <div class="flex justify-between items-center mb-4">
+            <h3 id="reportTitle" class="text-lg font-semibold text-black">Transaction</h3>
+            <div class="flex items-center gap-2">
+                <span class="text-black font-semibold">start Date</span>
+                <input type="date" id="startDate" placeholder="Start Date">
+                <span class="text-black font-semibold">end Date</span>
+                <input type="date" id="endDate" placeholder="End Date">
+                <select type="date" id="endDate" placeholder="End Date">
+                    <option value="">Choose status</option>
+                    <option value="">Pending</option>
+                    <option value="">Approved</option>
+                    <option value="">Reviewed</option>
+                    <option value="">Rejected</option>
+                </select>
+                <button id="loadReportButton" class="bg-blue-600 text-white px-4 py-2 rounded-md" onclick="loadReports()">Load Reports</button>
+            </div>
+        </div>
+        
+        
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-max border border-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="border px-4 py-2">#</th>
+                        <th class="border px-4 py-2">Customer</th>
+                        <th class="border px-4 py-2">Email</th>
+                        <th class="border px-4 py-2">Amount</th>
+                        <th class="border px-4 py-2">Date</th>
+                        <th class="border px-4 py-2">Status</th>
+                        <th class="border px-4 py-2">Email</th>
+                        <th class="border px-4 py-2">Amount</th>
+                        <th class="border px-4 py-2">Date</th>
+                        <th class="border px-4 py-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-between items-center mt-4">
+            <p class="text-gray-600">1 - 5 of 50 records</p>
+            <div class="flex items-center gap-2">
+                <button class="px-3 py-1 bg-gray-300 text-black rounded-md" id="prevPage">Previous</button>
+                <span id="pageNumbers" class="text-black"></span>
+                <button class="px-3 py-1 bg-gray-300 text-black rounded-md" id="nextPage">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const reports = {
+        sales: [
+            { id: 1, customer: "Olivia Martin", email: "olivia.martin@email.com", amount: "$1,999.00", date: "2024-02-12", status: "Completed" },
+            { id: 2, customer: "Jackson Lee", email: "jackson.lee@email.com", amount: "$39.00", date: "2024-02-11", status: "Pending" }
+        ],
+        customers: [
+            { id: 1, customer: "Sophia Walker", email: "sophia.walker@email.com", amount: "$0.00", date: "Joined: 2024-01-10", status: "New" },
+            { id: 2, customer: "Ethan Harris", email: "ethan.h@email.com", amount: "$50.00", date: "Joined: 2023-12-20", status: "Returning" }
+        ],
+        transactions: [
+            { id: 1, customer: "Liam Carter", email: "liam.c@email.com", amount: "$100.00", date: "2024-02-01", status: "Success" },
+            { id: 2, customer: "Mia Thompson", email: "mia.t@email.com", amount: "$500.00", date: "2024-01-25", status: "Failed" }
+        ]
+    };
+
+    let currentReport = "sales";
+    let currentPage = 1;
+    const rowsPerPage = 5;
+
+    function loadReport(reportType) {
+        currentReport = reportType;
+        document.getElementById("reportTitle").textContent = reportType.charAt(0).toUpperCase() + reportType.slice(1) + " Report";
+        currentPage = 1;
+        renderTable();
+    }
+
+    function renderTable() {
+        const tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+
+        const data = reports[currentReport];
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedData = data.slice(start, end);
+
+        paginatedData.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td class="border px-4 py-2">${row.id}</td>
+                <td class="border px-4 py-2">${row.customer}</td>
+                <td class="border px-4 py-2">${row.email}</td>
+                <td class="border px-4 py-2">${row.amount}</td>
+                <td class="border px-4 py-2">${row.date}</td>
+                <td class="border px-4 py-2">${row.status}</td>
+                <td class="border px-4 py-2">${row.email}</td>
+                <td class="border px-4 py-2">${row.amount}</td>
+                <td class="border px-4 py-2">${row.date}</td>
+                <td class="border px-4 py-2">${row.status}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        document.getElementById("pageNumbers").textContent = `${currentPage}`;
+    }
+
+    document.getElementById("prevPage").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+        const data = reports[currentReport];
+        if (currentPage < Math.ceil(data.length / rowsPerPage)) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById("exportButton").addEventListener("click", () => {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "ID,Customer,Email,Amount,Date,Status\n";
+
+        reports[currentReport].forEach(row => {
+            csvContent += `${row.id},${row.customer},${row.email},${row.amount},${row.date},${row.status}\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${currentReport}_report.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    renderTable();
+</script>

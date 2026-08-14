@@ -19,9 +19,7 @@
                 <!-- Header with Back Button -->
                 <!-- Header with Back Button -->
                 <div class="details-header">
-                        <a href="<?= route('instrustions/bank/note')?>" class="back-btn">
-                            <i class="bi bi-arrow-left"></i> Back
-                        </a>
+                        
                     </div>
                     <hr class="mb-3">
                     <!-- Header with Back Button -->
@@ -143,25 +141,6 @@
                     <div class="details-row d-flex align-items-center">
                         <div class="details-key">Requested at:</div>
                         <div class="details-value"><?=  $transaction['created_at']?></div>
-                    </div>
-
-                    <div class="details-row d-flex align-items-center">
-                        <div class="details-key">Approved By:</div>
-                        <div class="details-value">
-                            <?= ($transaction['approved_by'] !== NULL) ? $transaction['approved_by'] : 'N/A' ?>
-                        </div>
-                    </div>
-
-                    <div class="details-row d-flex align-items-center">
-                        <div class="details-key">Approved By:</div>
-                        <div class="details-value">
-                            <?= ($transaction['approved_at'] !== NULL) ? $transaction['approved_at'] : 'N/A' ?>
-                        </div>
-                    </div>
-
-                    <div class="details-row d-flex align-items-center">
-                        <div class="details-key">Approved Comment:</div>
-                        <div class="details-value"><?= $transaction['approved_comment'] ?></div>
                     </div>
 
                     <div class="details-row d-flex align-items-center">

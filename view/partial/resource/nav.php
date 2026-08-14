@@ -2,17 +2,13 @@
     <div class="flex items-center gap-8">
         <div class="flex items-center gap-2">
             <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                <span class="text-gray-700"><img src="<?= root()?>/public/img/undraw_profile.svg" alt="Profile" width="30"></span>
+                <span class="text-gray-700"><img src="/public/img/undraw_profile.svg" alt="Profile" width="30"></span>
             </div>
             <span class="text-gray-800"><?= fullname() ?></span>
         </div>
         <div class="flex gap-6">
-            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/uat_env/dashboard/reports', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">Dashboard</span></a>
-            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/uat_env/dashboard/', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">APSW Operations</span></a>
-            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/uat_env/dashboard/', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">APSW Finance</span></a>
-            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/uat_env/dashboard/', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">APSW Audit & Compliance</span></a>
-            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/uat_env/dashboard/', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">Account Signatures</span></a>
-            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/uat_env/dashboard/', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">Work Flow</span></a>
+            <a href="<?= route('dashboard/reports')?>"><span class="<?= currntUrl('/dashboard/reports', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">Dashboard</span></a>
+            <a href="<?= route('dashboard')?>"><span class="<?= currntUrl('/dashboard', 'text-teal-950 border-b-2 border-black', 'text-gray-600')?>">Work Flow</span></a>
         </div>
     </div>
     <!-- <div class="relative">

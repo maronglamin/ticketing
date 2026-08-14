@@ -99,7 +99,8 @@
                                         <option>APS IMF</option>
                                         <option>Access Bank</option>
                                         <option>EcoBank</option>
-                                        <option>Trust Bank</option>
+                                        <option>Zenith Bank</option>
+                                        <option>BASIC Bank</option>
                                     </select>
 
                                     <?php if(isset($errors['bank_name'])):?>

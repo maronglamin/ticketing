@@ -131,7 +131,7 @@
                     <!-- The supporting document section -->
                     <h4 class="text-center">Attached Fils</h4>
                     <?php if(! empty($transaction['upload_file'])):?>
-                        <img src="<?= transaction['upload_file']?>" alt="The uploaded file" style="margin: 0;padding: 0;width: 100%;height: auto;">
+                        <img src="<?= $transaction['upload_file']?>" alt="The uploaded file" style="margin: 0;padding: 0;width: 100%;height: auto;">
                     <?php endif;?>
                 </div>
 

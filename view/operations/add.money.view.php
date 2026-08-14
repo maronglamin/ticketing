@@ -45,7 +45,11 @@
                         <?php if  (isInputter()):?>
                         <div id="addMoney" class="tab-pane fade show active">
                             <h2 class="fw-bold text-center">Add Money</h2>
-                            <form action=" <?= route('addmoney/new')  ?>" method="post" enctype="multipart/form-data">
+                            <form 
+                                action=" <?= route('addmoney/new')  ?>" 
+                                method="post" enctype="multipart/form-data"
+                                id="emailForm"
+                            >
                                 <?php foreach($ticketing_id as $id):?>
                                     <input type="hidden" name="transaction_id" value=" <?= "APSW_". stringTime() . ($id['ticket_id'] + 1)  ?>">
                                 <?php endforeach;?>
@@ -131,3 +135,47 @@
             </div>
         </div>
     </div>
+
+    <div id="loadingScreen" style="display: none;">Sending...</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Ensure the form is properly filled before sending
+            var form = this;
+            if (!form.checkValidity()) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+
+            // Show the loading screen AFTER form validation
+            document.getElementById('loadingScreen').style.display = 'flex';
+
+            // Collect form data
+            var formData = new FormData(form);
+            var actionUrl = form.getAttribute('action');
+            var method = form.getAttribute('method');
+
+            // Perform AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, actionUrl, true);
+
+            // Handle response from the PHP script
+            xhr.onload = function() {
+                // Hide the loading screen when email sending is done
+                document.getElementById('loadingScreen').style.display = 'none';
+
+                if (xhr.status === 200) {
+                    window.location.href = "<?= route('transaction/history') ?>";
+                } else {
+                    alert('Failed to send email. Please try again.');
+                }
+            };
+
+            // Send the form data
+            xhr.send(formData);
+        });
+    });
+</script>

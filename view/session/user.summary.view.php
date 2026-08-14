@@ -88,6 +88,8 @@
                                             <option value="AUTO_AUTH">Authorizer</option>
                                             <option value="AUTO_REV">Reviewer</option>
                                             <option value="AUTH">input User</option>
+                                            <option value="COMPLIANCE">APSW Compliance</option>
+                                            <option value="Dev Team">Dev Team</option>
                                         </select>
 
                                 </div>
@@ -95,12 +97,13 @@
 
                             <div class="form-group">
                                 <div class="input-group">
-                                    <label class="input-group-text mt-4" for="auto">Bank Officer</label>
+                                    <label class="input-group-text mt-4" for="auto">Verification Level</label>
                                         <select class="form-control mt-4" name="aps_bankPayer" id="aps_bankPayer">
                                             <option value=""></option>
                                             <option value="IMF_BANK_PAYER">IMF PAYER</option>
                                             <option value="OTHER_BANK_USER">OTHER BANK PAYER</option>
                                             <option value="ACCOUNT_SIGNATORY">ACCOUNT SIGNATORY</option>
+                                            <option value="CCR_MANAGER">CCR Manager</option>
                                         </select>
 
                                 </div>

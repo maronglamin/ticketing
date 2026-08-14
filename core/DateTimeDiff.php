@@ -11,11 +11,16 @@ class DateTimeDiff
     {        
         $interval = (new DateTimeImmutable($first))->diff(new DateTimeImmutable($second));
         if ($second > $first) {
-            return '+ ' . $interval->h.'hr '. $interval->i. 'min'; 
+            return '+ ' . $interval->d.'d ' . $interval->h.'hr '. $interval->i. 'min';
         }
 
-        return '- ' . $interval->h.'hr '. $interval->i. 'min'; 
+        return '- ' . $interval->d.'d ' . $interval->h.'hr '. $interval->i. 'min';
 
     }
+
+    public static function isDateCompared($firstTime, $endTime)
+    {
+        return (new DateTime($firstTime)) > (new DateTime($endTime));
+    } 
 
 }

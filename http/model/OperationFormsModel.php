@@ -11,6 +11,7 @@ class OperationFormsModel
     {
         return Authenticator::get()
                 ->query("SELECT DATE_FORMAT(created_at, '%M %Y') AS folder_name,
+                                 DATE_FORMAT(created_at, '%W, %d') AS subfolder_name,
                                 id AS folder_id,
                                 transaction_filename, 
                                 transaction_type,
@@ -20,8 +21,9 @@ class OperationFormsModel
                                 COUNT(*) AS file_count
                             FROM 
                                 apsw_transaction_funding
+                            WHERE soft_deleted = 'NTDEL' 
                             GROUP BY 
-                                folder_name, transaction_filename, folder_id
+                                folder_name, subfolder_name, folder_id
                             ORDER BY 
                                 created_at DESC limit $start," . Response::PAGE_RECORD
                     )->get();
@@ -31,6 +33,7 @@ class OperationFormsModel
     {
         return Authenticator::get()
                 ->query("SELECT DATE_FORMAT(created_at, '%M %Y') AS folder_name,
+                                DATE_FORMAT(created_at, '%W, %d') AS subfolder_name,
                                 id AS folder_id,
                                 transaction_filename, 
                                 transaction_type,
@@ -41,9 +44,11 @@ class OperationFormsModel
                             FROM 
                                 aps_bank_note_trxn
                             WHERE 
+                                soft_deleted = 'NTDEL' 
+                            AND
                                 transaction_type = 'Kill_Money'  AND prepare_note = 'YES'
                             GROUP BY 
-                                folder_name, transaction_filename, folder_id
+                                folder_name, subfolder_name, folder_id
                             ORDER BY 
                                 created_at DESC limit $start," . Response::PAGE_RECORD
                     )->get();
@@ -53,6 +58,7 @@ class OperationFormsModel
     {
         return Authenticator::get()
                 ->query("SELECT DATE_FORMAT(created_at, '%M %Y') AS folder_name,
+                                DATE_FORMAT(created_at, '%W, %d') AS subfolder_name,
                                 id AS folder_id,
                                 transaction_filename, 
                                 transaction_type,
@@ -64,12 +70,13 @@ class OperationFormsModel
                                 aps_bank_note_trxn
                             WHERE 
                                 transaction_type = 'Kill_Money'
+                            AND soft_deleted = 'NTDEL' 
                             AND transaction_status = 'PENDING_SIGNATURE' 
                             OR  transaction_status = 'CLOSED'
                             OR  transaction_status = 'Signed & Approved'
                             OR  transaction_status = 'Awaiting 2nd Sig.'
                             GROUP BY 
-                                folder_name, transaction_filename, folder_id
+                                folder_name, subfolder_name, folder_id
                             ORDER BY 
                                 created_at DESC limit $start," . Response::PAGE_RECORD
                     )->get();
@@ -79,6 +86,7 @@ class OperationFormsModel
     {
         return Authenticator::get()
                 ->query("SELECT DATE_FORMAT(created_at, '%M %Y') AS folder_name,
+                                DATE_FORMAT(created_at, '%W, %d') AS subfolder_name,
                                 id AS folder_id,
                                 transaction_filename, 
                                 transaction_type,
@@ -90,12 +98,14 @@ class OperationFormsModel
                                 aps_bank_note_trxn
                             WHERE 
                                 transaction_type = 'Kill_Money'
+                            AND
+                                soft_deleted = 'NTDEL' 
                             AND transaction_status = 'Signed & Approved'
                             OR  transaction_status = 'PENDING_SIGNATURE'
                             OR  transaction_status = 'CLOSED'
                             OR  transaction_status = 'Awaiting 2nd Sig.'
                             GROUP BY 
-                                folder_name, transaction_filename, folder_id
+                                folder_name, subfolder_name, folder_id
                             ORDER BY 
                                 created_at DESC limit $start," . Response::PAGE_RECORD
                     )->get();

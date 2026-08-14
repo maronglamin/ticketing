@@ -1,3 +1,37 @@
+<style>
+/* Loading Screen Styles */
+#loadingScreen {
+    display: none; /* Ensures it starts hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    z-index: 1000;
+}
+
+/* Spinner styles */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+
 <div class="container mt-4">
         <div class="row">
 <!-- Left Column -->
@@ -35,7 +69,13 @@
                         <h4>Raise a Concern</h4>
                     </div>
                     <div class="card-body">
-                        <form action="<?= route("new/ticket/save") ?>" method="post" enctype="multipart/form-data">
+                        <form 
+                            enctype="multipart/form-data" 
+                            id="emailForm"
+                            action="<?= route('new/ticket/save')?>" 
+                            method="POST"
+                            >
+
                         <?php foreach($ticketing_id as $id): 
                             $tid = $id['ticket_id'];?>
                         <?php endforeach;?>
@@ -45,7 +85,7 @@
                             <input type="hidden" name="email" value="<?= http\model\ModelData::addUserEmail() ?>">
 
                             <!-- Reason for Concern -->
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="category" class="form-label">Reason for Concern</label>
                                 <select id="category" name="category" class="form-select">
                                     <option selected disabled value="">Choose a reason...</option>
@@ -58,7 +98,7 @@
                                     <div><small style="color:red"><?=$errors['category']?></small></div>
                                 <?php endif;?>
                                 
-                            </div>
+                            </div> -->
 
                             <div class="mb-3">
                                 <label for="department" class="form-label">Department</label>
@@ -74,7 +114,21 @@
                                 
                             </div>
 
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
+                                <label for="dept_email" class="form-label">Departmental Email</label>
+                                <select id="dept_email" name="dept_email" class="form-select">
+                                    <option selected disabled value="">Choose a department...</option>
+                                    <?php foreach($ownDeptEmail as $depEmail):?>
+                                        <option value="<?=$depEmail['email']?>"><?=$depEmail['department_name']?></option>
+                                    <?php endforeach;?>
+                                </select>
+                                <?php if(isset($errors['dept_email'])):?>
+                                    <div><small style="color:red"><?=$errors['dept_email']?></small></div>
+                                <?php endif;?>
+                                
+                            </div> -->
+
+                            <!-- <div class="mb-3">
                                 <label for="sub_category" class="form-label">SubCategory Type</label>
                                 <select id="sub_category" name="sub_category" class="form-select">
                                     <option selected disabled value="">Choose a sub-category...</option>
@@ -86,12 +140,12 @@
                                 <?php if(isset($errors['sub_category'])):?>
                                     <div><small style="color:red"><?=$errors['sub_category']?></small></div>
                                 <?php endif;?>
-                            </div>
+                            </div> -->
 
                             <!-- Customer Name -->
                             <div class="mb-3">
                                 <label for="summary" class="form-label">Subject/Summary</label>
-                                <input type="text" class="form-control" id="summary" name="summary" placeholder="Enter Ticket's subject">
+                                <textarea type="text" class="form-control" id="summary" name="summary" class="form-control" rows="5" placeholder="EnterSummary"></textarea>
                                 <?php if(isset($errors['summary'])):?>
                                     <div><small style="color:red"><?=$errors['summary']?></small></div>
                                 <?php endif;?>
@@ -134,8 +188,59 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
+
+                        <!-- Loading Screen -->
+                        <!-- <div id="loadingScreen">
+                            <div class="spinner"></div>
+                            Saving and Sending email, please wait...
+                        </div> -->
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+<!-- <div id="loadingScreen" style="display: none;">Sending...</div> -->
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            // event.preventDefault(); // Prevent default form submission
+            
+            // Ensure the form is properly filled before sending
+            var form = this;
+            if (!form.checkValidity()) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+
+            // Show the loading screen AFTER form validation
+            document.getElementById('loadingScreen').style.display = 'flex';
+
+            // Collect form data
+            var formData = new FormData(form);
+            var actionUrl = form.getAttribute('action');
+            var method = form.getAttribute('method');
+
+            // Perform AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, actionUrl, true);
+
+            // Handle response from the PHP script
+            xhr.onload = function() {
+                // Hide the loading screen when email sending is done
+                document.getElementById('loadingScreen').style.display = 'none';
+
+                if (xhr.status === 200) {
+                    window.location.href = "<?= route('dashboard') ?>";
+                } else {
+                    alert('Failed to send email. Please try again.');
+                }
+            };
+
+            // Send the form data
+            xhr.send(formData);
+        });
+    });
+</script>  -->

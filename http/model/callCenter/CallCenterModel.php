@@ -21,7 +21,15 @@ class CallCenterModel
     {
         $user = Session::user();
         return Authenticator::get()
-        ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' AND maker_id = '{$user}' order by $order desc limit $start," . Response::PAGE_RECORD)
+        ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' order by $order desc limit $start," . Response::PAGE_RECORD)
+        ->get();
+    }
+
+    public static function getAgentOpsTickets($table, $start, $order = 'id')
+    {
+        $user = Session::user();
+        return Authenticator::get()
+        ->query("SELECT * FROM {$table} WHERE soft_deleted = 'NTDEL' order by $order desc limit $start," . Response::PAGE_RECORD)
         ->get();
     }
 

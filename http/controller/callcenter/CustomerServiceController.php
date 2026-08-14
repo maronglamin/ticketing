@@ -14,8 +14,10 @@ class CustomerServiceController extends Controller
 {
     public function index()
     {
-        return ExternalView('callcenter/index.view', [
+        return view('callcenter/index.view', [
             'title' => 'Call Center',
+            'bannerHeader' => 'Customer Queries',
+            'tagline' => "Raise all queries from APS Customer",
             'errors' => Session::get('errors'),
             'ticketing_id' => ModelData::getLastInsertedID('aps_call_center'),
             'callReason' => CallCenterModel::getCategory('call_reason'),

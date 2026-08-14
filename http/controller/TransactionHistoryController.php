@@ -19,10 +19,20 @@ class TransactionHistoryController extends Controller
         $folderData = [];
         foreach (OperationFormsModel::getFolders(Paginator::start()) as $row) {
             $folder = $row['folder_name'];
+            $subfolder = $row['subfolder_name'];
+            
+            // Initialize folder if not set
             if (!isset($folderData[$folder])) {
                 $folderData[$folder] = [];
             }
-            $folderData[$folder][] = [
+            
+            // Initialize subfolder if not set
+            if (!isset($folderData[$folder][$subfolder])) {
+                $folderData[$folder][$subfolder] = [];
+            }
+
+            // Append the transaction to the subfolder
+            $folderData[$folder][$subfolder][] = [
                 'transaction_filename' => $row['transaction_filename'],
                 'transaction_type' => $row['transaction_type'],
                 'created_at' => $row['created_at'],
@@ -32,6 +42,7 @@ class TransactionHistoryController extends Controller
                 'maker_id' => $row['maker_id']
             ];
         }
+        
         return view('operations/index.view', [
             'title' => 'APSW operations',
             'errors' => Session::get('errors'),
@@ -128,12 +139,21 @@ class TransactionHistoryController extends Controller
             'comment' => sanitize($_POST['comment'])
         ],[]);
 
-        if (sanitize($_POST['transaction_type']) === 'KILL_MONEY') {
-            Authenticator::customCommit('aps_bank_note_trxn', 'kill_money_form_id', sanitize($_POST['transaction_id']), ['prepare_note' => 'YES']);  
-        }
-        Authenticator::commit('apsw_transaction_funding', sanitize($_POST['id']), $data);  
+        // if (sanitize($_POST['transaction_type']) === 'KILL_MONEY') {
+        //     Authenticator::customCommit(
+        //         'aps_bank_note_trxn',
+        //         'kill_money_form_id',
+        //         sanitize($_POST['transaction_id']),
+        //         ['prepare_note' => 'YES']
+        //     );  
+        // }
+        Authenticator::commit(
+            'apsw_transaction_funding',
+            sanitize($_POST['id']),
+            $data
+        );  
 
-        Session::flash('success', 'Details Now available to Finance Team');
+        Session::flash('success', 'Reviewed for filing');
         return redirect('/transaction/history');
     }
 
@@ -145,7 +165,11 @@ class TransactionHistoryController extends Controller
             'reject_at' => cur_time(),
         ],[]);
 
-        Authenticator::commit('apsw_transaction_funding', sanitize($_POST['id']), $data);  
+        Authenticator::commit(
+            'apsw_transaction_funding',
+            sanitize($_POST['id']),
+            $data
+        );  
 
 
         Session::flash('success', 'Details Reviewed and REJECTED successfully');
@@ -158,11 +182,25 @@ class TransactionHistoryController extends Controller
             'transaction_status' => Response::APPROVE,
             'Approved_by' => Session::user(), 
             'approved_at' => cur_time(),
-            'approve_comment' => sanitize($_POST['approve_comment']),
+            'approve_comment' => sanitize(
+                $_POST['approve_comment']
+            ),
         ],[]);
 
-        Authenticator::commit('apsw_transaction_funding', sanitize($_POST['id']), $data);  
+        if (sanitize($_POST['transaction_type']) === 'KILL_MONEY') {
+            Authenticator::customCommit(
+                'aps_bank_note_trxn',
+                'kill_money_form_id',
+                sanitize($_POST['transaction_id']),
+                ['prepare_note' => 'YES']
+            );  
+        }
 
+        Authenticator::commit(
+            'apsw_transaction_funding',
+            sanitize($_POST['id']),
+            $data
+        );  
 
         Session::flash('success', 'Details Approved and saved successfully');
         return redirect('/transaction/history');
@@ -259,6 +297,10 @@ class TransactionHistoryController extends Controller
             'kill_money_trxnid' => sanitize(trim($_POST['kill_money_trxnid'])),
             'created_at' => cur_time(),
             'maker_id' => Session::user(),
+            'transaction_status' => Response::APPROVE,
+            'Approved_by' => 'SYSTEM AUTO AUTH', 
+            'approved_at' => cur_time(),
+            'approve_comment' => 'AUTO AUTHORIZED',
             
         ],
         [
@@ -292,6 +334,7 @@ class TransactionHistoryController extends Controller
                 'created_at' => cur_time(),
                 'maker_id' => Session::user(),
                 'upload_file' => $data['upload_file'],
+                'prepare_note' => 'YES',
         ]); 
                 
         Session::flash('success', "Request sent successfully, seek for <strong> Kill_Money review </strong>");

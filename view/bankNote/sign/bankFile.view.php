@@ -51,7 +51,7 @@
                         <ul class="pagination justify-content-end">
                             <!-- Previous Button -->
                             <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= $page > 1 ? route('transaction/history?page=' . ($page - 1)) : '#' ?>" tabindex="-1">Previous</a>
+                                <a class="page-link" href="<?= $page > 1 ? route('user/bank/note?page=' . ($page - 1)) : '#' ?>" tabindex="-1">Previous</a>
                             </li>
 
                             <?php
@@ -67,13 +67,13 @@
                             // Generate visible page links
                             for ($i = $startPage; $i <= $endPage; $i++) : ?>
                                 <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                    <a class="page-link" href="<?= route('transaction/history?page=' . $i) ?>"><?= $i ?></a>
+                                    <a class="page-link" href="<?= route('user/bank/note?page=' . $i) ?>"><?= $i ?></a>
                                 </li>
                             <?php endfor; ?>
 
                             <!-- Next Button -->
                             <li class="page-item <?= $page >= $pages ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= $page < $pages ? route('transaction/history?page=' . ($page + 1)) : '#' ?>">Next</a>
+                                <a class="page-link" href="<?= $page < $pages ? route('user/bank/note?page=' . ($page + 1)) : '#' ?>">Next</a>
                             </li>
                         </ul>
                     </nav>

@@ -28,10 +28,12 @@
                                 <input type="hidden" name="ticketId" id="ticketId" value="<?= $detail['ticketId'] ?>">
                                 <select class="form-control" name="status" id="status">
                                     <option value="">Choose Status</option>
-                                    <option value="Customer Review">CustomerReview</option>
-                                    <option value="Analysis">Analysis</option>
-                                    <option value="Resolved">Resolved</option>
-                                    <option value="Proccessing">Proccessing</option>
+                                    <option value="CUSTOMER REVIEW">CUSTOMER REVIEW</option>
+                                    <option value="ANALYSIS">ANALYSIS</option>
+                                    <option value="RESOLVED">RESOLVED</option>
+                                    <option value="PROCCESSING">PROCCESSING</option>
+                                    <option value="CLOSED">CLOSED</option>
+                                    <option value="REOPENED">REOPEN</option>
                                 </select>
                             </div>
                         <div class="m-3"><button type="submit" class="btn btn-sm btn-outline-dark">Update</button></div>

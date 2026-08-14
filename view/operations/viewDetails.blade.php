@@ -13,6 +13,9 @@
                                 <form action="{{ route('transaction/approval') }}" method="post" class="nav-link" role="button">
                                     <input type="hidden" name="_method" value="PATCH">
                                     <input type="hidden" name="id" value="{{ $transaction['id'] }}">
+                                    <input type="hidden" name="transaction_id" value="{{ $transaction['transaction_id'] }}">
+                                    <input type="hidden" name="transaction_type" value="KILL_MONEY">
+
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal">Approve</button>
 

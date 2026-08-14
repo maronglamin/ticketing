@@ -74,10 +74,13 @@
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control form-sm">
                                 <option value="">Choose Current status</option>
-                                <option value="<?=core\Response::STATUS_ONHOLD?>"><?=core\Response::STATUS_ONHOLD?></option>
-                                <option value="<?=core\Response::STATUS_IN_PROGRESS?>"><?=core\Response::STATUS_IN_PROGRESS?></option>
-                                <option value="<?=core\Response::STATUS_RESOLVED?>"><?=core\Response::STATUS_RESOLVED?></option>
-                                <option value="<?=core\Response::STATUS_CLOSED?>"><?=core\Response::STATUS_CLOSED?></option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="CUSTOMER REVIEW">UAT TESTING</option>
+                                <option value="ANALYSIS">LIVE</option>
+                                <option value="RESOLVED">RESOLVED</option>
+                                <option value="PROCESSING">DEVELOPMENT</option>
+                                <option value="CLOSED">CLOSED</option>
+                                <option value="REOPENED">REOPENED</option>
                             </select>
                             <?php if(isset($errors['status'])):?>
                                     <div><small style="color:red"><?=$errors['status']?></small></div>

@@ -46,7 +46,6 @@
                                     <input type="hidden" name="transaction_id" value="<?= "APSW_". stringTime() . ($id['ticket_id'] + 1) ?>">
                                 <?php endforeach;?>
 
-                                <input type="hidden" name="transaction_filename" value="Bank_debit_Note_<?= underlineDate() ?>">
                                 <input type="hidden" name="Transaction_type" value="Kill_Money">
                                 <input type="hidden" name="id" value="<?= sanitize($_GET['view']) ?>">
 
@@ -161,11 +160,6 @@
                                     <?php endif;?>  
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="upload_file" class="form-label">Attached A Support Document</label>
-                                    <input class="form-control" disabled type="file" id="upload_file" name="upload_file">
-                                    <small>Functionality give to OPERATIONS, you do not need to upload again.</small>
-                                </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>

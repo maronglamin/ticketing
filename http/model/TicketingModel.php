@@ -15,6 +15,20 @@ class TicketingModel
                 ->get();
     }
 
+    public static function getAgentLogs($ticket_id)
+    {
+        return Authenticator::get()
+                ->query("SELECT * FROM agent_ops WHERE soft_deleted = 'NTDEL' AND ticketId = '{$ticket_id}'")
+                ->get();
+    }
+
+    public static function getCallcenterLogs($ticket_id)
+    {
+        return Authenticator::get()
+                ->query("SELECT * FROM aps_call_center WHERE soft_deleted = 'NTDEL' AND ticketId = '{$ticket_id}'")
+                ->get();
+    }
+
     public static function getComments($ticket_id)
     {
         return Authenticator::get()

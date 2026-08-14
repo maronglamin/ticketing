@@ -68,6 +68,7 @@ class TicketingController extends Controller
             'ticketing_id' => ModelData::getLastID('aps_ticketing'),
             'dept' => DepartmentModel::getDepartment(),
             'ownDept' => DepartmentModel::getDepartmentByEntity(),
+            'ownDeptEmail' => DepartmentModel::getDepartmentByEntity(),
             'parent' => RequestTypeModel::getParent(),
             'child' => RequestTypeModel::getChild(),
 
@@ -100,7 +101,7 @@ class TicketingController extends Controller
             'priority' => 'required'
         ]);
 
-        $data['file_path'] = UploadImg::saveFile($instance);
+        $data['file_path'] = UploadImg::saveTicketFile($data['ticketId'], $instance);
 
         if (TicketingModel::getTicketId($data['ticketId'])) {
 
@@ -196,6 +197,7 @@ class TicketingController extends Controller
             $data = [
                 'status' => sanitize($_POST['status']),
                 'ticketId' => sanitize($_POST['ticketId']),
+                'updated_at' => cur_time(),
 
             ],
             ['status' => 'required']
@@ -215,6 +217,35 @@ class TicketingController extends Controller
         
         Session::flash('success', 'Ticket details updated successfully');
         return redirect('/status/details?ticket='. $data['ticketId']);
+    }
+
+    public function agentStatusChange()
+    {
+        Validation::validate(
+            $data = [
+                'status' => sanitize($_POST['status']),
+                'ticketId' => sanitize($_POST['ticketId']),
+                'update_by' => Session::user(),
+                'updated_at' => cur_time(),
+
+            ],
+            ['status' => 'required']
+        );
+
+        $defaultComment = [
+            'comment' => 'The username '. Session::user() . ' has change the ticket status to '. '<strong>'. $data['status'] . '</strong>',
+            'ticketId' => $data['ticketId'],
+            'maker_id' => Session::user(),
+            'email' => ModelData::addUserEmail(),
+            'make_at' => cur_time(),
+            'upload_file' => 'null'
+        ];
+
+        Authenticator::customCommit('agent_ops', 'ticketId', $data['ticketId'], $data);  
+        Authenticator::save('ticket_comment', $defaultComment); 
+        
+        Session::flash('success', 'Ticket details updated successfully');
+        return redirect('/agent/operations/agentops/view/detail?change='. $data['ticketId']);
     }
 
     public function destroy()

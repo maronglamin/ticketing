@@ -29,7 +29,7 @@ class DepartmentModel
     public static function getDepartmentByEntity()
     {
         return Authenticator::get()
-                ->query("SELECT department_name, company FROM aps_department WHERE soft_deleted = :soft_deleted AND company =:company", [
+                ->query("SELECT department_name, email, company FROM aps_department WHERE soft_deleted = :soft_deleted AND company =:company", [
                     'soft_deleted' => 'NTDEL',
                     'company' => Session::entity(),
                 ])

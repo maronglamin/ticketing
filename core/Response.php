@@ -47,7 +47,7 @@ class Response {
     const FEMALE_GENDER = 'FEMALE';
     const NOT_DISCLOSED = 'pref_n_dis';
 
-    const PAGE_RECORD = 15;
+    const PAGE_RECORD = 100;
     const DEFAULT_PAGE = 1;
 
     const STATUS_NEW_USER = 0;
@@ -91,6 +91,7 @@ class Response {
     const REV = 'AUTO_REV';
     const AUTH = 'AUTO_AUTH';
     const INPUTTER = 'AUTH';
+    const COMPLIANCE_USER = 'COMPLIANCE';
 
     // bank notes user
     const IMF_BANK_USER = 'IMF_BANK_PAYER';

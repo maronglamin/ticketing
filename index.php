@@ -1,10 +1,13 @@
 <?php 
 
+// include('core/accessRestriction.php');
 use core\Router;
 use core\Session;
 use core\ValidationException;
 
 ob_start();
+
+// 85.159.210.85
 
 const BASE_PATH = __DIR__ . DIRECTORY_SEPARATOR;
 require BASE_PATH .'core/function.php';
@@ -19,6 +22,7 @@ spl_autoload_register(function ($class) {
     require base_path("{$class}.php");
 });
 require base_path('bootstrap.php');
+
 
 $router = new Router();
 

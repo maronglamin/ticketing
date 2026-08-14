@@ -175,8 +175,33 @@
                             </div>
                         </div>
                     <?php elseif  (isAccountSignatory() && empty($transaction['sign_1']) && $transaction['transaction_status'] === Core\Response::SENT_FOR_SIGNATURE && userACL() === core\Response::REV):?>
+                        <h5>Account Signatures</h5>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div><h5>User 1 Account Signatory</h5></div>
+                        <form action="<?= route('instruction/reject') ?>" method="post" class="nav-link" role="button">
+                            <input type="hidden" name="_method" value="PATCH">
+                            <input type="hidden" name="id" value="<?= $transaction['id'] ?>">    
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="erejectModalLabel">Reject Transaction</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Note:</strong> Inform the user to correct the details for review proccess to take effect</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
                             <div>
                                 <form action="<?= route('reviewer/sign/authority') ?>" method="post" class="nav-link" role="button">
                                     <input type="hidden" name="_method" value="PATCH">
@@ -209,37 +234,64 @@
                             </div>
                         </div>
                     <?php elseif  (isAccountSignatory() && !empty($transaction['sign_1']) && empty($transaction['sign_2']) && $transaction['transaction_status'] === 'Awaiting 2nd Sig.' && userACL() === core\Response::AUTH):?>
+                        <h5>Account Signatures</h5>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div><h5>User 2 Account Signatory</h5></div>
-                            <div>
-                                <form action="<?= route('approver/sign/authority') ?>" method="post" class="nav-link" role="button">
-                                    <input type="hidden" name="_method" value="PATCH">
-                                    <input type="hidden" name="id" value="<?= $transaction['id'] ?>">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#approveModal">Sign Documentt</button>
+                        <div>
+                        <form action="<?= route('instruction/reject') ?>" method="post" class="nav-link" role="button">
+                            <input type="hidden" name="_method" value="PATCH">
+                            <input type="hidden" name="id" value="<?= $transaction['id'] ?>">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="approveModalLabel">Account Signatory's Comment</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <textarea type="text" style="height: 90px;" class="form-control <?php if (isset($errors['sign_2_comment'])):?> is-invalid <?php endif;?>" name="sign_2_comment" id="sign_2_comment" placeholder="Make a comment"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                        </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="erejectModalLabel">Reject Transaction</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>This action will cancel the payment intruction</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+                        <div>
+                            <form action="<?= route('approver/sign/authority') ?>" method="post" class="nav-link" role="button">
+                                <input type="hidden" name="_method" value="PATCH">
+                                <input type="hidden" name="id" value="<?= $transaction['id'] ?>">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#approveModal">Sign Documentt</button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="approveModalLabel">Account Signatory's Comment</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <textarea type="text" style="height: 90px;" class="form-control <?php if (isset($errors['sign_2_comment'])):?> is-invalid <?php endif;?>" name="sign_2_comment" id="sign_2_comment" placeholder="Make a comment"></textarea>
                                         </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
+                                    </div>
+                                </div>
+                                </div>
 
-                                </form>                    
+                            </form>
                             </div>
                         </div>
                     <?php endif;?>
@@ -366,23 +418,10 @@
                         <div class="details-value"><?=  $transaction['created_at']?></div>
                     </div>
 
+                    <!-- Add to align label-->
                     <div class="details-row d-flex align-items-center">
-                        <div class="details-key">Approved By:</div>
-                        <div class="details-value">
-                            <?= ($transaction['approved_by'] !== NULL) ? $transaction['approved_by'] : 'N/A' ?>
-                        </div>
-                    </div>
-
-                    <div class="details-row d-flex align-items-center">
-                        <div class="details-key">Approved By:</div>
-                        <div class="details-value">
-                            <?= ($transaction['approved_at'] !== NULL) ? $transaction['approved_at'] : 'N/A' ?>
-                        </div>
-                    </div>
-
-                    <div class="details-row d-flex align-items-center">
-                        <div class="details-key">Approved Comment:</div>
-                        <div class="details-value"><?= $transaction['approved_comment'] ?></div>
+                        <div class="details-key">Comment:</div>
+                        <div class="details-value">APSW Pay Instruction order</div>
                     </div>
 
                     <div class="details-row d-flex align-items-center">
@@ -437,15 +476,19 @@
                             <div class="details-key">Signed by Comment:</div>
                             <div class="details-value"><?= $transaction['sign_2_comment'] ?></div>
                         </div>
-                        <div class="details-row d-flex align-items-center">
-                            <div class="details-key">Closed By</div>
-                            <div class="details-value"><?= $transaction['closed_by'] ?></div>
                         </div>
 
-                        <div class="details-row d-flex align-items-center">
-                            <div class="details-key">Closed At:</div>
-                            <div class="details-value"><?= $transaction['closed_at'] ?></div>
-                        </div>
+                        <div>
+                            <hr>
+                            <div class="details-row d-flex align-items-center">
+                                <div class="details-key">Closed By</div>
+                                <div class="details-value"><?= $transaction['closed_by'] ?></div>
+                            </div>
+
+                            <div class="details-row d-flex align-items-center">
+                                <div class="details-key">Closed At:</div>
+                                <div class="details-value"><?= $transaction['closed_at'] ?></div>
+                            </div>
                         </div>
                     </div>
                     

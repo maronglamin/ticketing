@@ -102,6 +102,16 @@ class Session
         return empty($_SESSION) ? authorize(false) : $_SESSION['aps_bankPayer'] === Response::ACCOUNT_SIGNATORY;
     }
 
+    public static function isCCRManager()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['aps_bankPayer'] === Response::CCR_MANAGER;
+    }
+
+    public static function isCompliance()
+    {
+        return empty($_SESSION) ? authorize(false) : $_SESSION['auto_auth'] === Response::COMPLIANCE_USER;
+    }
+
     public static function entity()
     {
         return empty($_SESSION) ? authorize(false) : $_SESSION['aps_entity'];

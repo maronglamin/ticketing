@@ -3,8 +3,10 @@
 use http\controller\BankNoteController;
 use http\controller\BankCloseController;
 use http\controller\DepartmentController;
+use http\controller\SearchTicketController;
 use http\controller\SignatureUserController;
 use http\controller\ticketing\TicketDetails;
+use http\controller\agentOps\AgentOpsController;
 use http\controller\TransactionHistoryController;
 use http\controller\Auth\session\SignedController;
 use http\controller\dashboard\DashboardController;
@@ -18,8 +20,7 @@ use http\controller\Emails\EmailNotificationController;
 use http\controller\Auth\registration\RegisterController;
 use http\controller\callcenter\CustomerServiceController;
 use http\controller\ticketing\MobifinTicketingController;
-
-
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Search;
 
 $router->get('/', [SessionController::class, 'index'])->only('guess');
 $router->post('/session', [SessionController::class, 'store']);
@@ -60,6 +61,8 @@ $router->get('/admin/status/ticket', [TicketingController::class, 'AdminStatus']
 // new details and comment throgh emails.
 $router->get('/status/details', [TicketDetails::class, 'index'])->only('auth');
 $router->post('/ticket/comments', [TicketDetails::class, 'store'])->only('auth');
+$router->post('/ticket/comments/agentLog', [TicketDetails::class, 'storeComment'])->only('auth');
+$router->post('/ticket/comments/callcenterLog', [TicketDetails::class, 'CallcenterStoreComment'])->only('auth');
 
 $router->post('/saved/ticket', [TicketingController::class, 'store'])->only('auth');
 
@@ -151,5 +154,43 @@ $router->get('/user/bank/note', [BankCloseController::class, 'index'])->only('au
 
 // report routes
 $router->get('/dashboard/reports', [BiDashboardController::class, 'index'])->only('auth');
+$router->get('/report/export', [BiDashboardController::class, 'export'])->only('auth');
+
+
+$router->get('/report/create/money', [BiDashboardController::class, 'createMoney'])->only('auth');
+$router->post('/create/search', [BiDashboardController::class, 'createSearch'])->only('auth');
+
+$router->get('/report/add/money', [BiDashboardController::class, 'addMoney'])->only('auth');
+$router->post('/add/search', [BiDashboardController::class, 'addSearch'])->only('auth');
+
+$router->get('/report/kill/money', [BiDashboardController::class, 'killMoney'])->only('auth');
+$router->post('/kill/search', [BiDashboardController::class, 'killSearch'])->only('auth');
+
+$router->get('/report/notes', [BiDashboardController::class, 'bankNote'])->only('auth');
+$router->post('/note/search', [BiDashboardController::class, 'noteSearch'])->only('auth');
+
+
+$router->get('/report/comulation', [BiDashboardController::class, 'agentComulativeReport'])->only('auth');
+$router->post('/comulation/search', [BiDashboardController::class, 'comulationSearch'])->only('auth');
+
+
+$router->post('/filter/ticket', [SearchTicketController::class, 'filter'])->only('auth');
+
+
+// call center
+$router->get('/report/callcenter', [BiDashboardController::class, 'callCenter'])->only('auth');
+$router->post('/callcenter/reps/search', [BiDashboardController::class, 'callCenterSearch'])->only('auth');
+
+$router->get('/callcenter/view/detail', [TicketDetails::class, 'callCenterLogs'])->only('auth');
+
+// agent operations
+$router->get('/report/agentOps', [BiDashboardController::class, 'agentOps'])->only('auth');
+$router->post('/agent/reps/search', [BiDashboardController::class, 'agentOpsSearch'])->only('auth');
+
+// Agent operations
+$router->get('/agent/operations/logs', [AgentOpsController::class, 'index'])->only('auth');
+$router->post('/agentops/save/logDetail', [AgentOpsController::class, 'store'])->only('auth');
+$router->get('/agent/operations/agentops/view/detail', [TicketDetails::class, 'agentLogs'])->only('auth');
+$router->post('/status/change/agent/logs', [TicketingController::class, 'agentStatusChange'])->only('auth');
 
 

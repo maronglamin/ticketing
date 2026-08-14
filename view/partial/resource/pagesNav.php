@@ -6,8 +6,8 @@
     </div> -->
 </div>
 <div class="flex gap-4 mb-6 border-b border-gray-300">
-    <a href="<?=route('dashboard/reports') ?>" class="px-4 py-2 text-sm <?= currntUrl('/uat_env/dashboard/reports', ' text-black border-b-2 border-black', 'text-gray-600')?>">Overview</a>
+    <a href="<?=route('dashboard/reports') ?>" class="px-4 py-2 text-sm <?= currntUrl('/dashboard/reports', ' text-black border-b-2 border-black', 'text-gray-600')?>">Overview</a>
+    <a href="<?=route('report/export') ?>" class="px-4 py-2 text-sm <?= currntUrl('/report/export', ' text-black border-b-2 border-black', 'text-gray-600')?>">Export Reports</a>
     <button class="px-4 py-2 text-sm">Analytics</button>
-    <button class="px-4 py-2 text-sm text-gray-600">Export Reports</button>
-    <button class="px-4 py-2 text-sm text-gray-600">Notifications</button>
+    <button class="px-4 py-2 text-sm text-gray-600">Variances</button>
 </div>

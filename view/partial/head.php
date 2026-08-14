@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="APS Ticketing - Your reliable ticketing solution. Get your tickets easily and securely. Powered Simplied.DEV">
+    <meta name="author" content="APS Wallet">
+    <meta name="keywords" content="APS Ticketing, APS Wallet, Ticketing Solution, Online Ticketing, Secure Tickets, Simplied.DEV">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aps-ticketing.apswallet.gm/ticketing/">
 
     <title><?= $title . ' | '. (core\Response::COMPANY_NAME)?></title>
     <link rel="icon" type="image/x-icon" href="<?= root()?>/public/img/favicon.ico" />
@@ -76,7 +79,7 @@
         .details-key {
             font-weight: bold;
             color: #6c757d;
-            width: 150px;
+            width: 100px;
         }
         .details-value {
             color: #343a40;
@@ -181,6 +184,46 @@
         }
 
 
+        /* loading animation */
+        /* Loading Screen Styles */
+        #loadingScreen {
+            display: none; /* Ensures it starts hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            z-index: 1000;
+        }
+
+        /* Spinner styles */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .small {
+        font-size: 0.875rem; /* Makes the font smaller */
+        }
+        .ps-4 {
+            padding-left: 1.5rem; /* Indent the files */
+        }
+
+
 
         /* Print Styles */
         @media print {
@@ -241,6 +284,7 @@
 
              
         }
+        
 
 </style>
 <body class="bg-light">

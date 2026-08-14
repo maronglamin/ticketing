@@ -22,10 +22,20 @@ class BankNoteController extends Controller
         $folderData = [];
         foreach (OperationFormsModel::getKillFolders(Paginator::start()) as $row) {
             $folder = $row['folder_name'];
+            $subfolder = $row['subfolder_name'];
+            
+            // Initialize folder if not set
             if (!isset($folderData[$folder])) {
                 $folderData[$folder] = [];
             }
-            $folderData[$folder][] = [
+            
+            // Initialize subfolder if not set
+            if (!isset($folderData[$folder][$subfolder])) {
+                $folderData[$folder][$subfolder] = [];
+            }
+
+            // Append the transaction to the subfolder
+            $folderData[$folder][$subfolder][] = [
                 'transaction_filename' => $row['transaction_filename'],
                 'transaction_type' => $row['transaction_type'],
                 'created_at' => $row['created_at'],
@@ -35,6 +45,8 @@ class BankNoteController extends Controller
                 'debit_note_form_id' => $row['debit_note_form_id']
             ];
         }
+
+        // dnd($folderData);
 
         return view('bankNote/index.view', [
             'title' => 'APSW operations',
@@ -98,7 +110,7 @@ class BankNoteController extends Controller
         // dnd($_POST);
         $instance = Validation::validate($data = [
             'debit_note_form_id' => sanitize($_POST['transaction_id']),
-            'transaction_filename' => sanitize($_POST['transaction_filename']), 
+            'transaction_filename' => 'Bank_debit_Note - '. sanitize($_POST['agent_bank_acc_name']) .' - '. slashDate(), 
             'Transaction_type' => sanitize($_POST['Transaction_type']),       
             'transaction_reason' => sanitize($_POST['transaction_reason']),
             'debit_instruction' => sanitize($_POST['debit_instruction']),
@@ -210,24 +222,32 @@ class BankNoteController extends Controller
         Authenticator::commit('aps_bank_note_trxn', sanitize($_POST['id']), $data);  
 
 
-        Session::flash('success', 'Details Reviewed and saved successfully');
-        return redirect('/instrustions/bank/note');
+        Session::flash('success', 'Payment instruction canceled');
+        return redirect('/signatures/bank/note');
     }
 
     public function approve()
     {
         Validation::validate($data = [
-            'transaction_status' => Response::APPROVE,
-            'approved_by' => Session::user(), 
+            'transaction_status' => Response::SENT_FOR_SIGNATURE,
+            'reviewed_by' => Session::user(), 
+            'reviewed_at' => cur_time(),
+            'reviewed_comment' => sanitize($_POST['comment']),
+            'approved_by' => 'System', 
             'approved_at' => cur_time(),
-            'approved_comment' => sanitize($_POST['comment']),
+            'approved_comment' => 'Auto System Authorized payment instruction',
         ],[]);
 
-        Authenticator::commit('aps_bank_note_trxn', sanitize($_POST['id']), $data);  
+        Authenticator::commit(
+            'aps_bank_note_trxn',
+            sanitize($_POST['id']),
+            $data
+        );  
 
 
-        Session::flash('success', 'Details Approved, waiting for review');
+        Session::flash('success', 'Details Approved and sent to account SIGNATORIES');
         return redirect('/instrustions/bank/note');
+
     }
 
     public function player()

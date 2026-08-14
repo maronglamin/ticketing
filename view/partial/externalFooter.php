@@ -1,7 +1,10 @@
 <!-- Footer -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <script>
-  // Function to export table to CSV
+
+  // to be removed as the updated and better performing export in use at ticketing.
+  // used for call center call log export report.
+  
   function exportTableToCSV(filename) {
     const table = document.getElementById('ticketTable');
     let rows = table.querySelectorAll('tr');

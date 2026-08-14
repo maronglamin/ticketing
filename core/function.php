@@ -208,6 +208,11 @@ function regularDate($data)
     return date("d/m/Y", strtotime($data));
 }
 
+function regularDateTime($data)
+{
+    return date("d/m/Y H:i:s", strtotime($data));
+}
+
 function readMonthYear($data)
 {
     return date("F", strtotime($data)). ' '.date("Y", strtotime($data));
@@ -338,6 +343,11 @@ function isOtherBankUser()
     return core\Session::isOtherBankUser();
 }
 
+function isCompliance()
+{
+    return core\Session::isCompliance();
+}
+
 //function format_number($number, $decimals = 2)
 //{
  //   return number_format((float)$number, $decimals, '.', ',');
@@ -359,10 +369,15 @@ function format_number($number, $decimals = 2)
 
 function currntUrl($uri, $trueString, $falseString)
 {
-    return ($_SERVER['REQUEST_URI'] === $uri) ? $trueString : $falseString;
+    return ($_SERVER['REQUEST_URI'] === root() . $uri) ? $trueString : $falseString;
 }
 
 function fullname()
 {
     return $_SESSION['name'];
+}
+
+function isCCRManager()
+{
+    return core\Session::isCCRManager(); 
 }

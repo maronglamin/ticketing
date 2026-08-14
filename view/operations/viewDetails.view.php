@@ -13,6 +13,9 @@
                                 <form action="<?= route('transaction/approval') ?>" method="post" class="nav-link" role="button">
                                     <input type="hidden" name="_method" value="PATCH">
                                     <input type="hidden" name="id" value="<?= $transaction['id'] ?>">
+                                    <input type="hidden" name="transaction_id" value="<?= $transaction['transaction_id'] ?>">
+                                    <input type="hidden" name="transaction_type" value="KILL_MONEY">
+                                    
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal">Approve</button>
 
@@ -26,8 +29,8 @@
                                             </div>
                                             <div class="modal-body">
                                             <div class="mb-3">
-                                                <label for="comment" class="form-label"><strong>Approver's Comment</strong></label>
-                                                <textarea type="text" style="height: 90px;" class="form-control <?php if(isset($errors['comment'])):?> is-invalid <?php endif;?>" name="comment" id="comment" placeholder="Make a comment"></textarea>
+                                                <label for="approve_comment" class="form-label"><strong>Approver's Comment</strong></label>
+                                                <textarea type="text" style="height: 90px;" class="form-control <?php if(isset($errors['approve_comment'])):?> is-invalid <?php endif;?>" name="approve_comment" id="approve_comment" placeholder="Make a comment"></textarea>
                                             </div>
                                             </div>
                                             <div class="modal-footer">
